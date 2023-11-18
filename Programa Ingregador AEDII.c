@@ -1,6 +1,13 @@
 #include"listaDoblementeEnlazada.h"
+#include<ctype.h>
+#include<windows.h>
+#include<unistd.h>
+
+#define MAX 10
+#define REPETICIONES 5
 
 //Prototipado de funciones
+void pasarMayuscula(char*);
 void procesarElInicio();
 void inicializarListas();
 void inicializarArchivos();
@@ -15,7 +22,6 @@ void menu();
 
 FILE *stockAlimentos, *stockBebidas, *stockHigiene, *stockLimpeza;
 int codCampAnterior;
-int flag = 0;
 t_Producto *alimentos, *bebidas, *cuidadoPersonal, *limpieza;
 
 //Funcion Principal  
@@ -90,6 +96,7 @@ tr_Productos ingresarProducto() {
     printf("Ingrese el nombre del producto:");
     fflush(stdin);
     scanf("%[^\n]s", producto.nombreProduct);
+    pasarMayuscula(producto.nombreProduct);
     printf("Ingrese el precio por unidad del producto:");
     scanf("%f", &producto.precioUnit);
     printf("Ingrese la cantidad en stock del producto:");
@@ -144,9 +151,145 @@ void cargarDesdeArchivo(t_Producto **v_Lista, const char *nombreArchivo) {
     fclose(archivo);
 }
 
+void pasarMayuscula(char *nombreProducto) {
+    for(int i = 0; nombreProducto[i]; i++){
+        nombreProducto[i] = toupper(nombreProducto[i]);
+    }
+}
+
 void menu() {
     int opc;
+    tr_Productos product;
     imprimirTitulo();
     printf("\nElija una opcion: 1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto "
-            "| 5-Visualizar Productos | 6-Guardar stock  | 7-Guardar todo el stock cargado | 8-Salir");
+            "| 5-Visualizar Productos | 6-Guardar stock | 7-Guardar todo el stock cargado | 8-Salir");
+    scanf("%d", &opc);
+    switch(opc) {
+        case 1:{
+            printf("En que sector quiere ingresar el producto?(1-alimentos 2-bebidas 3-cuidadoPersonal 4-limpieza):");
+            scanf("%d", &opc);
+            switch(opc) {
+                case 1:{    
+                    product = ingresarProducto();
+                    insproducto(&alimentos, product);
+                    break;
+                }
+                case 2:{    
+                    product = ingresarProducto();
+                    insproducto(&bebidas, product);
+                    break;
+                }
+                case 3:{    
+                    product = ingresarProducto();
+                    insproducto(&cuidadoPersonal, product);
+                    break;
+                }
+                case 4:{    
+                    product = ingresarProducto();
+                    insproducto(&limpieza, product);
+                    break;
+                }
+            }
+            menu();
+                    break;
+        }
+        case 2:{
+            printf("En que sector quiere eliminar el producto?(1-alimentos 2-bebidas 3-cuidadoPersonal 4-limpieza):");
+            scanf("%d", &opc);
+            switch(opc) {
+                case 1:{    
+                    elimproducto(&alimentos);
+                    break;
+                }
+                case 2:{    
+                    elimproducto(&bebidas);
+                    break;
+                }
+                case 3:{    
+                    elimproducto(&cuidadoPersonal);
+                    break;
+                }
+                case 4:{    
+                    elimproducto(&limpieza);
+                    break;
+                }
+            }
+            menu();
+            break;
+        }
+        case 3:{
+            printf("En que sector quiere buscar el producto?(1-alimentos 2-bebidas 3-cuidadoPersonal 4-limpieza)");
+            scanf("%d", &opc);
+            switch(opc) {
+                case 1:{
+                    tString nombreProduc;
+                    printf("Ingrese el nombre del producto a buscar:");
+                    fflush(stdin);
+                    scanf("%[^\n]s", nombreProduc);
+                    pasarMayuscula(nombreProduc);
+                    buscarProducto(&alimentos, nombreProduc);
+                    break;
+                }
+                case 2:{    
+                    tString nombreProduc;
+                    printf("Ingrese el nombre del producto a buscar:");
+                    fflush(stdin);
+                    scanf("%[^\n]s", nombreProduc);
+                    pasarMayuscula(nombreProduc);
+                    buscarProducto(&alimentos, nombreProduc);
+                    break;
+                }
+                case 3:{    
+                    tString nombreProduc;
+                    printf("Ingrese el nombre del producto a buscar:");
+                    fflush(stdin);
+                    scanf("%[^\n]s", nombreProduc);
+                    pasarMayuscula(nombreProduc);
+                    buscarProducto(&alimentos, nombreProduc);
+                    break;
+                }
+                case 4:{    
+                    tString nombreProduc;
+                    printf("Ingrese el nombre del producto a buscar:");
+                    fflush(stdin);
+                    scanf("%[^\n]s", nombreProduc);
+                    pasarMayuscula(nombreProduc);
+                    buscarProducto(&alimentos, nombreProduc);
+                    break;
+                }
+            }
+            menu();
+            break;
+        }
+        case 4:{
+            
+            menu();
+            break;
+        }
+        case 5:{
+
+            menu();
+            break;
+        }
+        case 6:{
+
+            menu();
+            break;
+        }
+        case 7:{
+
+            menu();
+            break;
+        }
+        case 8:{
+
+            menu();
+            break;
+        }
+        case 9:{
+
+            menu();
+            break;
+        }
+    }
 }

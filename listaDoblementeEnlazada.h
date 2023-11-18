@@ -4,12 +4,8 @@
 #include<stdlib.h>          
 #include<stdbool.h>
 #include<string.h>
-#include<ctype.h>
-#include<windows.h>
-#include<unistd.h>
+
 #define MAX_CHAR 50
-#define MAX 10
-#define REPETICIONES 5
 
 //Tipos de producto compuestos
 
@@ -37,6 +33,7 @@ void insproductoPosk(t_Producto**, tr_Productos, int);
 void elimproducto(t_Producto**);
 void elimproductoPosk(t_Producto**, int);
 void visualizarLista(t_Producto**);
+t_Producto *buscarProducto(t_Producto **, const char*);
 //Implementacion de las funciones 
 
 void inicializarLista(t_Producto **v_Lista) {
@@ -156,7 +153,6 @@ void elimproducto(t_Producto **v_Lista) {
     }
 }
 
-
 void elimproductoPosk(t_Producto **v_Lista, int pos) {
     int i;
 	if(!listaVacia(*v_Lista)) {
@@ -194,4 +190,19 @@ void visualizarLista(t_Producto **v_Lista) {
 		printf("Lista sin productos\n");
 	}
 }
+
+t_Producto* buscarProducto(t_Producto **v_Lista, const char *nombreProducto) {
+    t_Producto *actual;
+    actual = *v_Lista;
+    while(actual != NULL) {
+        if(strcmp(actual->producto.nombreProduct, nombreProducto) == 0) {
+            return actual;
+        }
+        actual = actual->sig;
+    }
+    return NULL;
+}
+
+
+
 #endif
