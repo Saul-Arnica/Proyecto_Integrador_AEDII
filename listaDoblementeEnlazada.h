@@ -5,7 +5,11 @@
 #include<stdbool.h>
 #include<string.h>
 #include<ctype.h>
+#include<windows.h>
+#include<unistd.h>
 #define MAX_CHAR 50
+#define MAX 10
+#define REPETICIONES 5
 
 //Tipos de producto compuestos
 
@@ -27,8 +31,8 @@ typedef struct producto {
 
 void inicializarLista(t_Producto**);
 bool listaVacia(t_Producto*);
-void insproductoV1(t_Producto**, tr_Productos);
-void insproductoV2(t_Producto**, tr_Productos);
+void insproductoOrdenado(t_Producto**, tr_Productos);
+void insproducto(t_Producto**, tr_Productos);
 void insproductoPosk(t_Producto**, tr_Productos, int);
 void elimproducto(t_Producto**);
 void elimproductoPosk(t_Producto**, int);
@@ -43,7 +47,7 @@ bool listaVacia(t_Producto *vP_Lista) {
     return vP_Lista == NULL;
 }
 //Funcion para instartar un producto de forma ordenada en la lista.
-void insproducto(t_Producto **v_Lista, tr_Productos pProducto) {
+void insproductoOrdenado(t_Producto **v_Lista, tr_Productos pProducto) {
     t_Producto *nuevoProducto, *productoActual; // creamos el nuevo nodo y un auxiliar para el actual.
     nuevoProducto =(t_Producto*)malloc(sizeof(t_Producto));// asignamos memoria
     nuevoProducto->producto = pProducto; //cargamos el producto
@@ -84,7 +88,7 @@ void insproducto(t_Producto **v_Lista, tr_Productos pProducto) {
     }
 }
 //Esta funcion ingresa un producto nuevo al final de la lista. 
-void insproductoV2(t_Producto **v_Lista, tr_Productos pProducto) {
+void insproducto(t_Producto **v_Lista, tr_Productos pProducto) {
     t_Producto *nuevoProducto;
     t_Producto *aux;
     aux = *v_Lista;
