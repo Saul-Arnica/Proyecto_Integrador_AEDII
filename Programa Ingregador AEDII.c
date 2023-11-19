@@ -28,6 +28,7 @@ t_Producto *alimentos, *bebidas, *cuidadoPersonal, *limpieza;
 
 int main() {
     procesarElInicio();
+    imprimirTitulo();
     menu();    
 return 0;
 }
@@ -58,7 +59,6 @@ bool archivoExiste(const char *nombreArchivo) {
 
 void imprimirTitulo() {
     int i, j, rep;
-
     for(rep = 0; rep < REPETICIONES; rep++) {
         for(i = 0; i < MAX; i++) {
             for(j = 0; j < i; j++) printf(" ");
@@ -160,9 +160,8 @@ void pasarMayuscula(char *nombreProducto) {
 void menu() {
     int opc;
     tr_Productos product;
-    imprimirTitulo();
-    printf("\nElija una opcion: 1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto "
-            "| 5-Visualizar Productos | 6-Guardar stock | 7-Guardar todo el stock cargado | 8-Salir");
+    printf("\nElija una opcion 1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto "
+            "| 5-Visualizar Productos | 6-Guardar stock | 7-Guardar todo el stock cargado | 8-Salir:");
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
@@ -222,12 +221,19 @@ void menu() {
             scanf("%d", &opc);
             switch(opc) {
                 case 1:{
+                    t_Producto *producto;
                     tString nombreProduc;
                     printf("Ingrese el nombre del producto a buscar:");
                     fflush(stdin);
                     scanf("%[^\n]s", nombreProduc);
                     pasarMayuscula(nombreProduc);
-                    buscarProducto(&alimentos, nombreProduc);
+                    producto = buscarProducto(&alimentos, nombreProduc);
+                    if(producto == NULL) {
+                        printf("No se encontro\n");
+                    }else{
+                        printf("El producto buscado es: %d %s %.2f %d %.2f\n", producto->producto.codProducto, producto->producto.nombreProduct,
+                                                        producto->producto.precioUnit, producto->producto.cantTtal, producto->producto.precioTtal);
+                    }
                     break;
                 }
                 case 2:{    
@@ -236,7 +242,7 @@ void menu() {
                     fflush(stdin);
                     scanf("%[^\n]s", nombreProduc);
                     pasarMayuscula(nombreProduc);
-                    buscarProducto(&alimentos, nombreProduc);
+                    buscarProducto(&bebidas, nombreProduc);
                     break;
                 }
                 case 3:{    
@@ -245,7 +251,7 @@ void menu() {
                     fflush(stdin);
                     scanf("%[^\n]s", nombreProduc);
                     pasarMayuscula(nombreProduc);
-                    buscarProducto(&alimentos, nombreProduc);
+                    buscarProducto(&cuidadoPersonal, nombreProduc);
                     break;
                 }
                 case 4:{    
@@ -254,7 +260,7 @@ void menu() {
                     fflush(stdin);
                     scanf("%[^\n]s", nombreProduc);
                     pasarMayuscula(nombreProduc);
-                    buscarProducto(&alimentos, nombreProduc);
+                    buscarProducto(&limpieza, nombreProduc);
                     break;
                 }
             }

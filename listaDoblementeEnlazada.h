@@ -33,7 +33,7 @@ void insproductoPosk(t_Producto**, tr_Productos, int);
 void elimproducto(t_Producto**);
 void elimproductoPosk(t_Producto**, int);
 void visualizarLista(t_Producto**);
-t_Producto *buscarProducto(t_Producto **, const char*);
+t_Producto *buscarProducto(t_Producto**, const char*);
 //Implementacion de las funciones 
 
 void inicializarLista(t_Producto **v_Lista) {
@@ -192,17 +192,15 @@ void visualizarLista(t_Producto **v_Lista) {
 }
 
 t_Producto* buscarProducto(t_Producto **v_Lista, const char *nombreProducto) {
-    t_Producto *actual;
-    actual = *v_Lista;
-    while(actual != NULL) {
-        if(strcmp(actual->producto.nombreProduct, nombreProducto) == 0) {
-            return actual;
+    t_Producto *productoActual;
+    productoActual = *v_Lista;
+    while(productoActual != NULL) {
+        if(strcmp(productoActual->producto.nombreProduct, nombreProducto) == 0) {
+            return productoActual;
         }
-        actual = actual->sig;
+        productoActual = productoActual->sig;
     }
     return NULL;
 }
-
-
 
 #endif
