@@ -18,7 +18,6 @@ typedef struct {
     tString nombreProduct;
     float precioUnit;
     int cantTtal;
-    float precioTtal;
 }tr_Productos;
 typedef struct producto {
     tr_Productos producto;

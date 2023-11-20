@@ -81,8 +81,7 @@ void inicializarArchivos() {
     stockLimpeza = fopen("limpiezaBackup", "w+b");
 }
 
-tr_Productos cargarProducto() {
-    tr_Productos producto;
+void cargarProducto(t_Producto **v_Lista, tr_Productos producto) {
     printf("Ingrese el codigo del producto:");
     scanf("%d", &producto.codProducto);
     printf("Ingrese el nombre del producto:");
@@ -93,7 +92,7 @@ tr_Productos cargarProducto() {
     scanf("%f", &producto.precioUnit);
     printf("Ingrese la cantidad en stock del producto:");
     scanf("%d", &producto.cantTtal);
-    return producto;
+    insproducto(&v_Lista, producto);
 }
 
 void modificarProducto(t_Producto **v_Lista, int pos, tr_Productos nuevoProducto) {
@@ -152,6 +151,7 @@ void pasarMayuscula(char *nombreProducto) {
 void menu() {
     int opc;
     tr_Productos product;
+    t_Producto *producto;
     printf("\033[H\033[J");
     printf("\t*** Bienvenidos a RetailMate lo mejor para tu comercio :D ***\n");
     printf("\nElija una opcion 1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto "
@@ -163,23 +163,19 @@ void menu() {
             scanf("%d", &opc);
             switch(opc) {
                 case 1:{    
-                    product = cargarProducto();
-                    insproducto(&alimentos, product);
+                    cargarProducto(&bebidas, product);
                     break;
                 }
                 case 2:{    
-                    product = cargarProducto();
-                    insproducto(&bebidas, product);
+                    cargarProducto(&bebidas, product);
                     break;
                 }
                 case 3:{    
-                    product = cargarProducto();
-                    insproducto(&cuidadoPersonal, product);
+                    cargarProducto(&bebidas, product);
                     break;
                 }
                 case 4:{    
-                    product = cargarProducto();
-                    insproducto(&limpieza, product);
+                    cargarProducto(&bebidas, product);
                     break;
                 }
             }
@@ -215,7 +211,7 @@ void menu() {
             scanf("%d", &opc);
             switch(opc) {
                 case 1:{
-                    t_Producto *producto;
+                    
                     tString nombreProduc;
                     printf("Ingrese el nombre del producto a buscar:");
                     fflush(stdin);
@@ -226,7 +222,7 @@ void menu() {
                         printf("No se encontro\n");
                     }else{
                         printf("El producto buscado es: %d %s %.2f %d %.2f\n", producto->producto.codProducto, producto->producto.nombreProduct,
-                                                        producto->producto.precioUnit, producto->producto.cantTtal, producto->producto.precioTtal);
+                                                        producto->producto.precioUnit, producto->producto.cantTtal);
                     }
                     break;
                 }
