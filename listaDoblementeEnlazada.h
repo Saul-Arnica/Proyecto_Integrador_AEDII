@@ -4,6 +4,9 @@
 #include<stdlib.h>          
 #include<stdbool.h>
 #include<string.h>
+#include<ctype.h>
+#include<windows.h>
+#include<unistd.h>
 
 #define MAX_CHAR 50
 
@@ -33,7 +36,7 @@ void insproductoPosk(t_Producto**, tr_Productos, int);
 void elimproducto(t_Producto**);
 void elimproductoPosk(t_Producto**, int);
 void visualizarLista(t_Producto**);
-t_Producto *buscarProducto(t_Producto**, const char*);
+
 //Implementacion de las funciones 
 
 void inicializarLista(t_Producto **v_Lista) {

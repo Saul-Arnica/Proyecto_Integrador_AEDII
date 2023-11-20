@@ -1,27 +1,17 @@
-#include"listaDoblementeEnlazada.h"
-#include<ctype.h>
-#include<windows.h>
-#include<unistd.h>
 
-#define MAX 10
-#define REPETICIONES 5
+#include"listaDoblementeEnlazada.h"
+#include"inicioDePrograma.h"
+#include"operacionesBasicas.h"
+#include"operacionesAdmin-User.h"
+#include"finDePrograma.h"
 
 //Prototipado de funciones
-void pasarMayuscula(char*);
 void procesarElInicio();
-void inicializarListas();
-void inicializarArchivos();
-bool archivoExiste(const char*);
-void cargarDesdeArchivo(t_Producto**, const char*);
-void modificarProducto(t_Producto**, int, tr_Productos);
-tr_Productos ingresarProducto();
-void imprimirTitulo();
 void menu();
 
 //Variables globales
 
 FILE *stockAlimentos, *stockBebidas, *stockHigiene, *stockLimpeza;
-int codCampAnterior;
 t_Producto *alimentos, *bebidas, *cuidadoPersonal, *limpieza;
 
 //Funcion Principal  
@@ -37,11 +27,14 @@ return 0;
 
 void procesarElInicio() {
     inicializarListas();
-    if(archivoExiste("alimentosBackup") && archivoExiste("bebidasBackup") && archivoExiste("higieneBackup") && archivoExiste("limpiezaBackup")) {
+    if(archivoExiste("alimentosBackup") && archivoExiste("bebidasBackup") 
+        && archivoExiste("higieneBackup") && archivoExiste("limpiezaBackup")) {
+
         cargarDesdeArchivo(&alimentos, "alimentosBackup");
         cargarDesdeArchivo(&bebidas, "bebidasBackup");
         cargarDesdeArchivo(&cuidadoPersonal, "higieneBackup");
         cargarDesdeArchivo(&limpieza, "limpiezaBackup");
+
     }else{
         inicializarArchivos();
     }
@@ -71,7 +64,7 @@ void imprimirTitulo() {
             printf("\033[H\033[J"); // Limpia la pantalla
         }
     }
-    printf("\t*** Bienvenidos a RetailMate lo mejor para tu comercio :D ***\n");
+    
 }
 
 void inicializarListas() {
@@ -79,7 +72,6 @@ void inicializarListas() {
     inicializarLista(&bebidas);  
     inicializarLista(&cuidadoPersonal); 
     inicializarLista(&limpieza);
-    printf("Se inicializaron las categorias! Listas para gestionar el stock!...\n");
 }
 
 void inicializarArchivos() {
@@ -89,7 +81,7 @@ void inicializarArchivos() {
     stockLimpeza = fopen("limpiezaBackup", "w+b");
 }
 
-tr_Productos ingresarProducto() {
+tr_Productos cargarProducto() {
     tr_Productos producto;
     printf("Ingrese el codigo del producto:");
     scanf("%d", &producto.codProducto);
@@ -160,6 +152,8 @@ void pasarMayuscula(char *nombreProducto) {
 void menu() {
     int opc;
     tr_Productos product;
+    printf("\033[H\033[J");
+    printf("\t*** Bienvenidos a RetailMate lo mejor para tu comercio :D ***\n");
     printf("\nElija una opcion 1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto "
             "| 5-Visualizar Productos | 6-Guardar stock | 7-Guardar todo el stock cargado | 8-Salir:");
     scanf("%d", &opc);
@@ -169,22 +163,22 @@ void menu() {
             scanf("%d", &opc);
             switch(opc) {
                 case 1:{    
-                    product = ingresarProducto();
+                    product = cargarProducto();
                     insproducto(&alimentos, product);
                     break;
                 }
                 case 2:{    
-                    product = ingresarProducto();
+                    product = cargarProducto();
                     insproducto(&bebidas, product);
                     break;
                 }
                 case 3:{    
-                    product = ingresarProducto();
+                    product = cargarProducto();
                     insproducto(&cuidadoPersonal, product);
                     break;
                 }
                 case 4:{    
-                    product = ingresarProducto();
+                    product = cargarProducto();
                     insproducto(&limpieza, product);
                     break;
                 }
