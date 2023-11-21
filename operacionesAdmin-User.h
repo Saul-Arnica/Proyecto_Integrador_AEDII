@@ -1,24 +1,23 @@
-
-#include"listaDoblementeEnlazada.h"
-#include"listaDinamica.h"
 #include"operacionesBasicas.h"
+
+
 
 //Interfaz Publica
 
-t_Producto *buscarProducto(t_Producto**, const char*); //Buscamos por nombre el producto
-void cargarProducto(t_Producto**, tr_Productos*);
-void ingresarProductos(t_Producto**, t_Producto**, t_Producto**, t_Producto**, tr_Productos*, int);
-void eliminarProductos(t_Producto**, t_Producto**, t_Producto**, t_Producto**, int);
-void buscarProductos(t_Producto**, t_Producto**, t_Producto**, t_Producto**, t_Producto*, int);
-void modificarProducto(t_Producto**, int, tr_Productos);
+t_ListaProducto *buscarProducto(t_ListaProducto**, const char*); //Buscamos por nombre el producto
+void cargarProducto(t_ListaProducto**, tr_Productos*);
+void ingresarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, tr_Productos*, int);
+void eliminarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, int);
+void buscarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto*, int);
+void modificarProducto(t_ListaProducto**, int, tr_Productos);
 
 //Interfaz Privada
 
-t_Producto* buscarProductoss(t_Producto **v_Lista, const char *nombreProducto) {
-    t_Producto *productoActual;
+t_ListaProducto* buscarProducto(t_ListaProducto **v_Lista, const char *nombreProducto) {
+    t_ListaProducto *productoActual;
     productoActual = *v_Lista;
     while(productoActual != NULL) {
-        if(strcmp(productoActual->producto.nombreProduct, nombreProducto) == 0) {
+        if(strstr(productoActual->producto.nombreProduct, nombreProducto) != NULL) {
             return productoActual;
         }
         productoActual = productoActual->sig;
@@ -26,8 +25,8 @@ t_Producto* buscarProductoss(t_Producto **v_Lista, const char *nombreProducto) {
     return NULL;
 }
 
-void modificarProducto(t_Producto **v_Lista, int pos, tr_Productos nuevoProducto) {
-    t_Producto *aux;
+void modificarProducto(t_ListaProducto **v_Lista, int pos, tr_Productos nuevoProducto) {
+    t_ListaProducto *aux;
     int i;
     aux = *v_Lista;
     for(i=0; i<pos && aux != NULL; i++) {
@@ -40,12 +39,12 @@ void modificarProducto(t_Producto **v_Lista, int pos, tr_Productos nuevoProducto
     }
 }
 
-void cargarProducto(t_Producto **v_Lista, tr_Productos *producto) {
+void cargarProducto(t_ListaProducto **v_Lista, tr_Productos *producto) {
     printf("Ingrese el codigo del producto:");
     scanf("%d", &producto->codProducto);
     printf("Ingrese el nombre del producto:");
     fflush(stdin);
-    scanf("%[^\n]s", &producto->nombreProduct);
+    scanf("%[^\n]s", producto->nombreProduct);
     pasarMayuscula(producto->nombreProduct);
     printf("Ingrese el precio por unidad del producto:");
     scanf("%f", &producto->precioUnit);
@@ -54,8 +53,8 @@ void cargarProducto(t_Producto **v_Lista, tr_Productos *producto) {
     insproducto(v_Lista, *producto);
 }
 
-void ingresarProductos(t_Producto **v_Lista1, t_Producto **v_Lista2, t_Producto **v_Lista3, 
-                        t_Producto **v_Lista4, tr_Productos *producto, int opc) {
+void ingresarProductos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, 
+                        t_ListaProducto **v_Lista4, tr_Productos *producto, int opc) {
     switch(opc) {
         case 1:{    
             cargarProducto(v_Lista1, producto);
@@ -76,8 +75,8 @@ void ingresarProductos(t_Producto **v_Lista1, t_Producto **v_Lista2, t_Producto 
     }
 }
 
-void eliminarProductos(t_Producto **v_Lista1, t_Producto **v_Lista2, t_Producto **v_Lista3, 
-                        t_Producto **v_Lista4, int opc) {
+void eliminarProductos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, 
+                        t_ListaProducto **v_Lista4, int opc) {
     switch(opc) {
         case 1:{    
             elimproducto(v_Lista1);
@@ -98,8 +97,8 @@ void eliminarProductos(t_Producto **v_Lista1, t_Producto **v_Lista2, t_Producto 
     }
 
 }
-void buscarProductos(t_Producto **v_Lista1, t_Producto **v_Lista2, t_Producto **v_Lista3, 
-                        t_Producto **v_Lista4, t_Producto *producto, int opc) {
+void buscarProductos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, 
+                        t_ListaProducto **v_Lista4, t_ListaProducto *producto, int opc) {
     switch(opc) {
                 case 1:{
                     tString nombreProduc;
@@ -145,3 +144,4 @@ void buscarProductos(t_Producto **v_Lista1, t_Producto **v_Lista2, t_Producto **
                 }
             }
 }
+

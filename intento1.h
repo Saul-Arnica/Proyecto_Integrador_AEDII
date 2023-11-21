@@ -1,40 +1,6 @@
-#ifndef LISTA_DINAMICA_H /* -> Se utiliza en C y C++ para crear bloques condicionales de compilación*/
-#define LISTA_DINAMICA_H       /*Evitan la inclusión repetida de código en un archivo de encabezado*/
+#include"listaDoblementeEnlazada.h"
 #include<stdio.h>                /*garantiza que el código solo se incluya una vez en un programa*/
 #include<stdlib.h>          
-#include<stdbool.h>
-#include<string.h>
-#include<ctype.h>
-#include<windows.h>
-#include<unistd.h>
-
-#define MAX_CHAR 50
-
-//Tipos de producto compuestos
-
-typedef char tString[MAX_CHAR];
-typedef struct {
-    int codProducto;
-    tString nombreProduct;
-    float precioUnit;
-    int cantTtal;
-}tr_Productos;
-typedef struct producto {
-    tr_Productos producto;
-    struct producto *sig;
-    struct producto *ant;
-}t_Producto;
-
-//Prototipado de funciones
-
-void inicializarLista(t_Producto**);
-bool listaVacia(t_Producto*);
-void insproductoOrdenado(t_Producto**, tr_Productos);
-void insproducto(t_Producto**, tr_Productos);
-void insproductoPosk(t_Producto**, tr_Productos, int);
-void elimproducto(t_Producto**);
-void elimproductoPosk(t_Producto**, int);
-void visualizarLista(t_Producto**);
 
 //Implementacion de las funciones 
 
@@ -42,15 +8,13 @@ void inicializarLista(t_Producto **v_Lista) {
     *v_Lista = NULL;
 }
 
-bool listaVacia(t_Producto *vP_Lista) {
-    return vP_Lista == NULL;
-}
+
 //Funcion para instartar un producto de forma ordenada en la lista.
 void insproductoOrdenado(t_Producto **v_Lista, tr_Productos pProducto) {
     t_Producto *nuevoProducto, *productoActual; // creamos el nuevo nodo y un auxiliar para el actual.
     nuevoProducto =(t_Producto*)malloc(sizeof(t_Producto));// asignamos memoria
     nuevoProducto->producto = pProducto; //cargamos el producto
-    productoActual = *v_Lista; //Al actual lo igualamos al ultimo 
+    productoActual = (*v_Lista); //Al actual lo igualamos al ultimo 
     //Nos colocamos el inicio de la lista.
     if(productoActual != NULL) {
         while(productoActual->ant != NULL) {
@@ -62,7 +26,7 @@ void insproductoOrdenado(t_Producto **v_Lista, tr_Productos pProducto) {
         nuevoProducto->sig = productoActual;
         nuevoProducto->ant = NULL;
 
-        if(productoActual == NULL) {
+        if(productoActual != NULL) {
             productoActual->ant = nuevoProducto;
         }
 
@@ -72,10 +36,10 @@ void insproductoOrdenado(t_Producto **v_Lista, tr_Productos pProducto) {
 
     }else{
 
-        while(productoActual->sig && productoActual->sig->producto.precioUnit <= pProducto.precioUnit) {
+        while(productoActual->sig && productoActual->sig->producto.codProducto <= pProducto.codProducto) {
             productoActual = productoActual->sig;
         }
-        // Insertamos el nuevo nodo después del nodo anterior */
+        // Insertamos el nuevo nodo después del nodo anterior
         nuevoProducto->sig = productoActual->sig;
         productoActual->sig = nuevoProducto;
         nuevoProducto->ant = productoActual;
@@ -94,17 +58,21 @@ void insproducto(t_Producto **v_Lista, tr_Productos pProducto) {
     nuevoProducto = (t_Producto*)malloc(sizeof(t_Producto));
     nuevoProducto->producto = pProducto;
     nuevoProducto->sig = NULL;
-    if(!listaVacia(*v_Lista)) {
-        while(aux->sig != NULL) {
-        aux = aux->sig;
-        }
-    aux->sig = nuevoProducto;
-    nuevoProducto->ant = aux;
-    }else{
+    nuevoProducto->ant = NULL;
+    if(listaVacia((*v_Lista))) {
         *v_Lista = nuevoProducto;
         nuevoProducto->ant = NULL;
+    }else{
+        while(aux->sig != NULL) {
+            aux = aux->sig;
+        }
+        if(aux != NULL) {
+            aux->sig = nuevoProducto;
+            nuevoProducto->ant = aux;
+        }
     }
 }
+
 
 void insproductoPosk(t_Producto **v_Lista, tr_Productos pProducto, int pos) {
     t_Producto *aux;
@@ -192,5 +160,3 @@ void visualizarLista(t_Producto **v_Lista) {
 		printf("Lista sin productos\n");
 	}
 }
-
-#endif

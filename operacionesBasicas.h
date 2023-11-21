@@ -1,6 +1,9 @@
+#ifndef OPERACIONES_BASICAS
+#define OPERACIONES_BASICAS
+#include"listasDoblementeEnlazadas.h"
+#define MAX 10
+#define REPETICIONES 5
 
-#include"listaDoblementeEnlazada.h"
-#include"inicioDePrograma.h"
 
 //Interfaz Publica
 
@@ -30,3 +33,5 @@ void pasarMayuscula(char *nombreProducto) {
         nombreProducto[i] = toupper(nombreProducto[i]);
     }
 }
+
+#endif
