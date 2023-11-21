@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "listasdoblementeenlazadas.h": "c"
+        "listasdoblementeenlazadas.h": "c",
+        "iniciodeprograma.h": "c",
+        "operacionesbasicas.h": "c"
     }
 }
