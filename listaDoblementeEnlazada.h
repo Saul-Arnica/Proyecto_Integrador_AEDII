@@ -193,16 +193,4 @@ void visualizarLista(t_Producto **v_Lista) {
 	}
 }
 
-t_Producto* buscarProducto(t_Producto **v_Lista, const char *nombreProducto) {
-    t_Producto *productoActual;
-    productoActual = *v_Lista;
-    while(productoActual != NULL) {
-        if(strcmp(productoActual->producto.nombreProduct, nombreProducto) == 0) {
-            return productoActual;
-        }
-        productoActual = productoActual->sig;
-    }
-    return NULL;
-}
-
 #endif
