@@ -42,32 +42,38 @@ void menu() {
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
+
             ingresarProductos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &product, opc);
             menu();
-            break;
+                                                    break;
+
         }
         case 2:{
+
             eliminarProductos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &product, opc);
             menu();
-            break;
+                                                    break;
+
         }
         case 3:{
+
             buscar_Productos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &nuevoProducto, nombreProducto, opc, &codProducto);
             menu();
-            break;
+                                                    break;
+
         }
     case 4:{
 
             //modificarProducto(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &nuevoProducto, nombreProducto, opc);
             menu();    
-                                                break;
+                                                    break;
 
         }
         case 5:{
 
             visualizarListas(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, opc);
             menu();
-                                                break;
+                                                    break;
 
         }
     }

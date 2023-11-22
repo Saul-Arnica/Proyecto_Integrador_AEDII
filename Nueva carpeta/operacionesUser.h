@@ -165,11 +165,13 @@ void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {
     switch(opc) {
         case 1:{
             elimpUltimoroducto(v_Lista);
-        break;
+                        break;
         }
         case 2:{
+            opc = ingresarCodProducto(opc);
+            producto->codProducto = opc;
             elim_Producto(v_Lista, *producto);
-        break;
+                        break;
         }
         case 3:{
             printf("Ingrese el nombre del producto a Eliminar:");
@@ -177,7 +179,7 @@ void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {
             scanf("%[^\n]s", nombreProducto);
             pasarMayuscula(nombreProducto);
             eliminarProductoPorNombre(v_Lista, nombreProducto); 
-        break;
+                        break;
         }
     }
 }
@@ -200,19 +202,19 @@ void buscar_Productos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_
     switch(opc) {
         case 1:{
             buscar_Producto(v_Lista1, pProducto, pNombreProduc, opc, pCodProducto);
-                break;
+                                            break;
         }
         case 2:{    
             buscar_Producto(v_Lista2, pProducto, pNombreProduc, opc, pCodProducto);
-                break;
+                                            break;
         }
         case 3:{    
             buscar_Producto(v_Lista3, pProducto, pNombreProduc, opc, pCodProducto);
-                break;
+                                            break;
         }
         case 4:{    
             buscar_Producto(v_Lista4, pProducto, pNombreProduc, opc, pCodProducto);
-                break;
+                                            break;
         }
     }
 }
@@ -224,13 +226,13 @@ void buscar_Producto(t_ListaProducto **v_Lista, t_ListaProducto *pPoducto, char 
         case 1:{
             pNombreProduc = ingresarNombreProducto(pNombreProduc);
             buscarProducto(v_Lista, pNombreProduc);
-                break;
+                                break;
         }
         case 2:{
             *pCodProducto = ingresarCodProducto(*pCodProducto);
             pPoducto = buscarProduct(v_Lista, pCodProducto);
             imprimirProducto(pPoducto);
-                break;
+                                break;
         }
     }
 }
@@ -243,20 +245,19 @@ void visualizarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
     switch(opc) {
         case 1:{
             visualizarLista(*v_Lista1);
-        break;
+                    break;
         }
         case 2:{
             visualizarLista(*v_Lista2);
-        break;
-        break;
+                    break;
         }
         case 3:{
             visualizarLista(*v_Lista3);
-        break;
+                    break;
         }
         case 4:{
             visualizarLista(*v_Lista4);
-        break;
+                    break;
         }
     }
 }
