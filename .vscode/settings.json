@@ -2,6 +2,7 @@
     "files.associations": {
         "listasdoblementeenlazadas.h": "c",
         "iniciodeprograma.h": "c",
-        "operacionesbasicas.h": "c"
+        "operacionesbasicas.h": "c",
+        
     }
 }

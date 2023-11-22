@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <ctype.h>
+#include<windows.h>
 
 #define MAX_CHAR 50
 
@@ -26,6 +27,7 @@ typedef struct producto {
     struct producto *ant;
 }t_ListaProducto;
 
+
 // Prototipos de funciones
 
 void inicializarLista(t_ListaProducto**);
@@ -33,9 +35,9 @@ bool listaVacia(t_ListaProducto*);
 void insAlInicio(t_ListaProducto**, tr_Productos);
 void insFinal(t_ListaProducto**, tr_Productos);
 void elim_Producto(t_ListaProducto**, tr_Productos);
-void visualizarListas(t_ListaProducto*);
+void visualizarLista(t_ListaProducto*);
 
-#endif
+
 
 // Implementación de las funciones
 void inicializarLista(t_ListaProducto **lista) {
@@ -51,7 +53,7 @@ void insAlInicio(t_ListaProducto **lista, tr_Productos pProducto) {
     nuevoProducto = (t_ListaProducto*)malloc(sizeof(t_ListaProducto));
     if (nuevoProducto == NULL) {
         printf("No se pudo asignar memoria!...\n");
-        return;
+        exit(EXIT_FAILURE);
     }
     nuevoProducto->producto = pProducto;
     nuevoProducto->sig = *lista;
@@ -67,7 +69,7 @@ void insFinal(t_ListaProducto** lista, tr_Productos pProducto) {
     nuevoProducto = (t_ListaProducto*)malloc(sizeof(t_ListaProducto));
     if (nuevoProducto == NULL) {
         printf("No se pudo asignar memoria!...\n");
-        return;
+        exit(EXIT_FAILURE);
     }
     nuevoProducto->producto = pProducto;
     nuevoProducto->sig = NULL;
@@ -75,17 +77,15 @@ void insFinal(t_ListaProducto** lista, tr_Productos pProducto) {
     if (*lista == NULL) {
         nuevoProducto->ant = NULL;
         *lista = nuevoProducto;
-        return;
+    }else{
+        t_ListaProducto* final;
+        final = *lista; 
+        while (final->sig != NULL) {
+            final = final->sig;
+        }
+        final->sig = nuevoProducto;
+        nuevoProducto->ant = final;
     }
-
-    t_ListaProducto* ultimo;
-    ultimo = *lista;
-    while (ultimo->sig != NULL) {
-        ultimo = ultimo->sig;
-    }
-
-    ultimo->sig = nuevoProducto;
-    nuevoProducto->ant = ultimo;
 }
 
 void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
@@ -123,7 +123,23 @@ void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
     free(aux);
 }
 
-void visualizarListas(t_ListaProducto *lista) {
+void elimproducto(t_ListaProducto **v_Lista) {
+    if(!listaVacia(*v_Lista)) {
+        t_ListaProducto *productoSuprimir;
+        productoSuprimir = *v_Lista;
+         *v_Lista = productoSuprimir->sig;
+        if(*v_Lista != NULL) {
+            (*v_Lista)->ant = NULL;
+        }
+        printf("Se elimino el producto:%s...\n", productoSuprimir->producto.nombreProduct);
+        free(productoSuprimir);
+        productoSuprimir = NULL;
+    }else {
+        printf("No hay productos!....\n");
+    }
+}
+
+void visualizarLista(t_ListaProducto *lista) {
     t_ListaProducto *productoActual;
     productoActual = lista;
     if(productoActual != NULL) {
@@ -132,11 +148,12 @@ void visualizarListas(t_ListaProducto *lista) {
         }
     }
     printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
-    while (lista != NULL) {
+    while (productoActual != NULL) {
         printf("| %-8d | %-12s | %-5.2f | %-5d | \n", productoActual->producto.codProducto,productoActual->producto.nombreProduct, 
                                                         productoActual->producto.precioUnit,productoActual->producto.cantTtal);
-        lista = lista->sig;
+        productoActual = productoActual->sig;
     }
     printf("\n");
 }
 
+#endif

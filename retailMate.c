@@ -17,7 +17,7 @@ FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza;
 
 int main() {
     inicializacionPrograma();
-    imprimirTitulo();
+    //imprimirTitulo();
     menu();
 return 0;
 }
@@ -46,20 +46,23 @@ void inicializacionPrograma() {
 
 void menu() {
     int opc;
-    tr_Productos *product;
+    tr_Productos product;
     t_ListaProducto *nuevoProducto;
-    imprimirTitulo();
+    //printf("\033[H\033[J");
+    //printf("Bienvenidos a RetailMate lo mejor para tu comercio :D");
     printf("\nElija una opcion:"
     "1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto | 5-Visualizar Productos |"
     " | 6- 7- 8- etc");
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
-            ingresarProductos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, product, opc);
+            ingresarProductos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &product, opc);
             menu();
-            break;
+                                                break;
         }
         case 2:{
+            eliminarProductos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &product, opc);
+            menu();
             break;
         }
         case 3:{
@@ -69,6 +72,8 @@ void menu() {
             break;
         }
         case 5:{
+            visualizarListas(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, opc);
+            menu();
             break;
         }
     }
