@@ -1,20 +1,70 @@
+#ifndef OPERACIONES_ADMIN_USER
+#define OPERACIONES_ADMIN_USER
 #include"operacionesBasicas.h"
 
 //Interfaz Publica
 
-t_ListaProducto *buscarProducto(t_ListaProducto**, const char*); //Buscamos por nombre el producto
-void cargarProducto(t_ListaProducto**, tr_Productos*);
+//Funciones de ingreso.
+
 void ingresarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, tr_Productos*, int);
+void cargarProducto(t_ListaProducto**, tr_Productos*);
+
+//Funciones de eliminar.
+
 void eliminarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**,tr_Productos*, int);
-void elimProductos(t_ListaProducto**, tr_Productos*, int);
+void elimProductos(t_ListaProducto**, tr_Productos*, int); //Funcion para elegir de que forma eliminar
 void eliminarProductoPorNombre(t_ListaProducto**, const char*);
-void buscarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto*, int);
+
+//Funciones de Buscar.
+
+void buscar_Productos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto*, char*, int, int*);
+void buscar_Producto(t_ListaProducto**, t_ListaProducto*, char*, int, int*); //Funcion para elegir de que forma buscar
+t_ListaProducto *buscarProduct(t_ListaProducto**, const int*); //Buscamos el producto por codigo de producto
+t_ListaProducto *buscarProductoNombre(t_ListaProducto**, const char*); //Buscamos el producto por nombre de producto
+void buscarProducto(t_ListaProducto**, const char*); //Buscamos los productos por nombre de producto
+
+//Funciones de Modificar.
+
 void modificarProducto(t_ListaProducto**, int, tr_Productos);
+
+//Funciones varias necesarias para el funcionamiento de las funciones anteriores.
+
+char *ingresarNombreProducto(char*);
+int ingresarCodProducto(int);
+
+void imprimirProducto(t_ListaProducto*);
+
 void visualizarListas(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, int);
 
 //Interfaz Privada
 
-t_ListaProducto* buscarProducto(t_ListaProducto **v_Lista, const char *nombreProducto) {
+void buscarProducto(t_ListaProducto **v_Lista, const char *nombreProducto) {
+    t_ListaProducto *productoActual;
+    productoActual = *v_Lista;
+    printf("\tLos productos con esa descripcion son:\n");
+    printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
+    while(productoActual != NULL) {
+        if(strstr(productoActual->producto.nombreProduct, nombreProducto) != NULL) {
+            printf("| %d | %s | %.2f | %d |\n", productoActual->producto.codProducto, productoActual->producto.nombreProduct,
+                                                    productoActual->producto.precioUnit, productoActual->producto.cantTtal);
+        }
+        productoActual = productoActual->sig;
+    }
+}
+
+t_ListaProducto *buscarProduct(t_ListaProducto **v_Lista, const int *pCodProducto) {
+    t_ListaProducto *productoActual;
+    productoActual = *v_Lista;
+    while(productoActual != NULL) {
+        if(productoActual->producto.codProducto == *pCodProducto) {
+            return productoActual;
+        }
+        productoActual = productoActual->sig;
+    }
+    return NULL;
+}
+
+t_ListaProducto *buscarProductoNombre(t_ListaProducto **v_Lista, const char *nombreProducto) {
     t_ListaProducto *productoActual;
     productoActual = *v_Lista;
     while(productoActual != NULL) {
@@ -88,19 +138,19 @@ void eliminarProductos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
-            elim_Productos(v_Lista1, producto, opc);
+            elimProductos(v_Lista1, producto, opc);
                 break;
         }
         case 2:{    
-            elim_Productos(v_Lista2, producto, opc);
+            elimProductos(v_Lista2, producto, opc);
                 break;
         }
         case 3:{    
-            elim_Productos(v_Lista3, producto, opc);
+            elimProductos(v_Lista3, producto, opc);
                 break;
         }
         case 4:{    
-            elim_Productos(v_Lista4, producto, opc);
+            elimProductos(v_Lista4, producto, opc);
                 break;
         }
     }
@@ -108,11 +158,12 @@ void eliminarProductos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t
 }
 
 void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {
+    tString nombreProducto;
     printf("Seleccione la forma a eliminar(1-Ultimo producto agregado | 2-Por codigo de producto | 3-Por nombre):");
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
-            elimproducto(v_Lista);
+            elimpUltimoroducto(v_Lista);
         break;
         }
         case 2:{
@@ -120,7 +171,11 @@ void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {
         break;
         }
         case 3:{
-            
+            printf("Ingrese el nombre del producto a Eliminar:");
+            fflush(stdin);
+            scanf("%[^\n]s", nombreProducto);
+            pasarMayuscula(nombreProducto);
+            eliminarProductoPorNombre(v_Lista, nombreProducto); 
         break;
         }
     }
@@ -128,7 +183,7 @@ void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {
 
 void eliminarProductoPorNombre(t_ListaProducto **v_Lista, const char *nombreProducto) {
     t_ListaProducto* productoAEliminar;
-    productoAEliminar = buscarProducto(v_Lista, nombreProducto);
+    productoAEliminar = buscarProductoNombre(v_Lista, nombreProducto);
     if (productoAEliminar != NULL) {
         elim_Producto(v_Lista, productoAEliminar->producto);
     } else {
@@ -136,58 +191,51 @@ void eliminarProductoPorNombre(t_ListaProducto **v_Lista, const char *nombreProd
     }
 }
 
-}
+void buscar_Productos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, 
+                        t_ListaProducto **v_Lista4, t_ListaProducto *pProducto, char *pNombreProduc, int opc, int *pCodProducto) {
 
-void buscarProductos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, 
-                        t_ListaProducto **v_Lista4, t_ListaProducto *pProducto, int opc) {
+    printf("Seleccione la categoria donde desea buscar(1-Alimentos | 2-Bebidas | 3-Cuidado Personal | 4-Limpieza):");
+    scanf("%d", &opc);
     switch(opc) {
-                case 1:{
-                    tString nombreProduc;
-                    printf("Ingrese el nombre del producto a buscar:");
-                    fflush(stdin);
-                    scanf("%[^\n]s", nombreProduc);
-                    pasarMayuscula(nombreProduc);
-                    pProducto = buscarProducto(v_Lista1, nombreProduc);
-                    if(pProducto == NULL) {
-                        printf("No se encontro\n");
-                    }else{
-                        printf("El producto buscado es: %d %s %.2f %d \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct, pProducto->producto.precioUnit, 
-                                                                            pProducto->producto.cantTtal);
-                    }
-                    break;
-                }
-                case 2:{    
-                    tString nombreProduc;
-                    printf("Ingrese el nombre del producto a buscar:");
-                    fflush(stdin);
-                    scanf("%[^\n]s", nombreProduc);
-                    pasarMayuscula(nombreProduc);
-                    pProducto = buscarProducto(v_Lista2, nombreProduc);
-                    break;
-                }
-                case 3:{    
-                    tString nombreProduc;
-                    printf("Ingrese el nombre del producto a buscar:");
-                    fflush(stdin);
-                    scanf("%[^\n]s", nombreProduc);
-                    pasarMayuscula(nombreProduc);
-                    buscarProducto(v_Lista3, nombreProduc);
-                    break;
-                }
-                case 4:{    
-                    tString nombreProduc;
-                    printf("Ingrese el nombre del producto a buscar:");
-                    fflush(stdin);
-                    scanf("%[^\n]s", nombreProduc);
-                    pasarMayuscula(nombreProduc);
-                    buscarProducto(v_Lista4, nombreProduc);
-                    break;
-                }
-            }
+        case 1:{
+            buscar_Producto(v_Lista1, pProducto, pNombreProduc, opc, pCodProducto);
+                break;
+        }
+        case 2:{    
+            buscar_Producto(v_Lista2, pProducto, pNombreProduc, opc, pCodProducto);
+                break;
+        }
+        case 3:{    
+            buscar_Producto(v_Lista3, pProducto, pNombreProduc, opc, pCodProducto);
+                break;
+        }
+        case 4:{    
+            buscar_Producto(v_Lista4, pProducto, pNombreProduc, opc, pCodProducto);
+                break;
+        }
+    }
 }
 
-void visualizarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, 
-                        t_ListaProducto **v_Lista4, int opc) {
+void buscar_Producto(t_ListaProducto **v_Lista, t_ListaProducto *pPoducto, char *pNombreProduc, int opc, int *pCodProducto) {
+    printf("Elija de que forma quiere buscar(1-Por nombre general | 2-Por Codio de producto):");
+    scanf("%d", &opc);
+    switch(opc) {
+        case 1:{
+            pNombreProduc = ingresarNombreProducto(pNombreProduc);
+            buscarProducto(v_Lista, pNombreProduc);
+                break;
+        }
+        case 2:{
+            *pCodProducto = ingresarCodProducto(*pCodProducto);
+            pPoducto = buscarProduct(v_Lista, pCodProducto);
+            imprimirProducto(pPoducto);
+                break;
+        }
+    }
+}
+
+void visualizarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
+                        t_ListaProducto **v_Lista3, t_ListaProducto **v_Lista4, int opc) {
     
     printf("Seleccione la categoria a ingresar(1-Alimentos 2-Bebidas 3-Cuidado Personal 4-Limpieza):");
     scanf("%d", &opc);
@@ -211,3 +259,93 @@ void visualizarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_
         }
     }
 }
+
+char *ingresarNombreProducto(char *pNombreProduc) {
+    printf("Ingrese el nombre del producto a buscar:");
+    fflush(stdin);
+    scanf("%[^\n]s", pNombreProduc);
+    pasarMayuscula(pNombreProduc);
+    return pNombreProduc;
+}
+
+int ingresarCodProducto(int pCodProducto) {
+    printf("Ingrese el codigo de producto a buscar:");
+    scanf("%d", &pCodProducto);
+    return pCodProducto;
+}
+
+void imprimirProducto(t_ListaProducto *pProducto) {
+    if(pProducto == NULL) {
+        printf("No se encontro\n");
+    }else{ 
+        printf("\tLos productos con esa descripcion son:\n");
+        printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
+        printf("| %d | %s | %.2f | %d |\n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
+                                                            pProducto->producto.precioUnit, pProducto->producto.cantTtal);
+    }
+}
+
+#endif 
+
+// switch(opc) {
+//                 case 1:{
+//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
+//                     pProducto = buscarProducto(v_Lista1, pProducto->producto.nombreProduct);
+//                     imprimirProducto(pProducto);
+//                     break;
+
+//                 }
+//                 case 2:{  
+
+//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
+//                     pProducto = buscarProducto(v_Lista2, pProducto->producto.nombreProduct);
+//                     if(pProducto == NULL) {
+//                         printf("No se encontro\n");
+//                     }else{ 
+//                         printf("El producto buscado es: %d %s %.2f %d \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
+//                                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
+//                     }
+//                     break;
+
+//                 }
+//                 case 3:{    
+
+//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
+//                     pProducto = buscarProducto(v_Lista3, pProducto->producto.nombreProduct);
+//                     if(pProducto == NULL) {
+//                         printf("No se encontro\n");
+//                     }else{ 
+//                         printf("El producto buscado es: %d %s %.2f %d \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
+//                                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
+//                     }
+//                     break;
+
+//                 }
+//                 case 4:{    
+
+//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
+//                     pProducto = buscarProducto(v_Lista4, pProducto->producto.nombreProduct);
+//                     if(pProducto == NULL) {
+//                         printf("No se encontro\n");
+//                     }else{ 
+//                         printf("El producto buscado es: %d %s %.2f %d \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
+//                                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
+//                     }
+//                     break;
+
+//                 }
+//             }
+
+
+
+// void imprimirProducto(t_ListaProducto *pProducto) {
+//     if(pProducto == NULL) {
+//         printf("No se encontro\n");
+//     }else{ 
+//         printf("\tLos productos con esa descripcion son:\n");
+//         printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
+//         printf("| %d | %s | %.2f | %d |\n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
+//                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
+//     }
+
+// }

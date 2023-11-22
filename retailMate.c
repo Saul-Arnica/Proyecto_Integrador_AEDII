@@ -45,9 +45,10 @@ void inicializacionPrograma() {
 }
 
 void menu() {
-    int opc;
+    int opc, codProducto;
+    tString nombreProducto;
     tr_Productos product;
-    t_ListaProducto *nuevoProducto;
+    t_ListaProducto nuevoProducto;
     //printf("\033[H\033[J");
     //printf("Bienvenidos a RetailMate lo mejor para tu comercio :D");
     printf("\nElija una opcion:"
@@ -61,20 +62,33 @@ void menu() {
                                                 break;
         }
         case 2:{
+
             eliminarProductos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &product, opc);
             menu();
-            break;
+                                                break;
+
         }
         case 3:{
-            break;
+
+            buscar_Productos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &nuevoProducto, nombreProducto, opc, &codProducto);
+            menu();
+                                                break;
+        
         }
         case 4:{
-            break;
+
+
+            //modificarProducto(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &nuevoProducto, nombreProducto, opc);
+            menu();    
+                                                break;
+
         }
         case 5:{
+
             visualizarListas(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, opc);
             menu();
-            break;
+                                                break;
+
         }
     }
 }
