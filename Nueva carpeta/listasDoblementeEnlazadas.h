@@ -133,14 +133,41 @@ void elimpUltimoroducto(t_ListaProducto **v_Lista) {
             productoSuprimir->ant->sig = NULL;
         }
         productoSuprimir->ant = NULL;
+        productoSuprimir->sig = NULL;
         printf("| COD PRODUCTO | NOMB PRODUCTO |\n");
-        printf("Se elimino el producto: %d %s...\n", productoSuprimir->producto.codProducto,productoSuprimir->producto.nombreProduct);
-        free(productoSuprimir);
+        printf("Se elimino el producto: %d %s...\n", productoSuprimir->producto.codProducto,
+                                                        productoSuprimir->producto.nombreProduct);
         productoSuprimir = NULL;
+        free(productoSuprimir);
+        
     }else {
         printf("No hay productos!....\n");
     }
 }
+
+void elimpUltimoroducto(t_ListaProducto **v_Lista) {
+    if(!listaVacia(*v_Lista)) {
+        t_ListaProducto *productoSuprimir;
+        productoSuprimir = *v_Lista;
+        while(productoSuprimir->sig != NULL) {
+            productoSuprimir = productoSuprimir->sig;
+        }
+        if(productoSuprimir->ant != NULL) {
+            productoSuprimir->ant->sig = NULL;
+        }else{
+            // Si el nodo a suprimir es también el primer nodo
+            *v_Lista = NULL;
+        }
+        printf("| COD PRODUCTO | NOMB PRODUCTO |\n");
+        printf("Se elimino el producto: %d %s...\n", productoSuprimir->producto.codProducto,productoSuprimir->producto.nombreProduct);
+        
+        productoSuprimir = NULL;
+        free(productoSuprimir);
+    }else {
+        printf("No hay productos!....\n");
+    }
+}
+
 
 void visualizarLista(t_ListaProducto *lista) {
     t_ListaProducto *productoActual;
@@ -156,6 +183,8 @@ void visualizarLista(t_ListaProducto *lista) {
         productoActual = productoActual->sig;
     }
     printf("\n");
-	}
+	}else{
+        printf("No hay productos!");
+    }
 }
 #endif
