@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <ctype.h>
-#include<windows.h>
+#include <windows.h>
 
 #define MAX_CHAR 50
 

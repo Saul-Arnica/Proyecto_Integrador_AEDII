@@ -52,8 +52,7 @@ void menu() {
     //printf("\033[H\033[J");
     //printf("Bienvenidos a RetailMate lo mejor para tu comercio :D");
     printf("\nElija una opcion:"
-    "1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto | 5-Visualizar Productos |"
-    " | 6- 7- 8- etc");
+    "1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto | 5-Visualizar Productos :");
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
