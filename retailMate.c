@@ -1,6 +1,6 @@
 #include"inicioDePrograma.h"
 #include"operacionesBasicas.h"
-#include"operacionesAdmin-User.h"
+#include"operacionesUser.h"
 #include"finDePrograma.h"
 
 //Prototipado de funciones
@@ -18,13 +18,14 @@ FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza;
 int main() {
     inicializacionPrograma();
     //imprimirTitulo();
+    printf("Es una prueba");
     menu();
 return 0;
 }
 
 //Implementacion
 
-void inicializacionPrograma() {
+static void inicializacionPrograma() {
 
     inicializarListas(&alimentos, &bebidas, &cuidadoPersonal, &limpieza);
     
