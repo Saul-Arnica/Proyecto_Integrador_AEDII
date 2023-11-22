@@ -35,7 +35,7 @@ bool listaVacia(t_ListaProducto*);
 void insAlInicio(t_ListaProducto**, tr_Productos);
 void insFinal(t_ListaProducto**, tr_Productos);
 void elim_Producto(t_ListaProducto**, tr_Productos);
-void elimpUltimoroducto(t_ListaProducto **);
+void elimUltimoroducto(t_ListaProducto **);
 void visualizarLista(t_ListaProducto*);
 
 // Implementacion de las funciones
@@ -122,7 +122,7 @@ void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
     free(aux);
 }
 
-// void elimpUltimoroducto(t_ListaProducto **v_Lista) {
+// void elimUltimoroducto(t_ListaProducto **v_Lista) {
 //     if(!listaVacia(*v_Lista)) {
 //         t_ListaProducto *productoSuprimir;
 //         productoSuprimir = *v_Lista;
@@ -145,7 +145,7 @@ void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
 //     }
 // }
 
-void elimpUltimoroducto(t_ListaProducto **v_Lista) {
+void elimUltimoroducto(t_ListaProducto **v_Lista) {
     if(!listaVacia(*v_Lista)) {
         t_ListaProducto *productoSuprimir;
         productoSuprimir = *v_Lista;
@@ -160,9 +160,9 @@ void elimpUltimoroducto(t_ListaProducto **v_Lista) {
         }
         printf("| COD PRODUCTO | NOMB PRODUCTO |\n");
         printf("Se elimino el producto: %d %s...\n", productoSuprimir->producto.codProducto,productoSuprimir->producto.nombreProduct);
-        
+        productoSuprimir->ant = NULL;
         productoSuprimir = NULL;
-        free(productoSuprimir);
+        free(productoSuprimir); 
     }else {
         printf("No hay productos!....\n");
     }

@@ -38,25 +38,25 @@ void inicializarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
 
 void inicializarArchivos(FILE **archivo1, FILE **archivo2, FILE **archivo3, FILE **archivo4) {
 
-    *archivo1 = fopen("alimentosBackup", "w+b");
+    *archivo1 = fopen("stockAlimentos", "w+b");
     if (*archivo1 == NULL) {
         printf("Error al abrir el archivo alimentosBackup\n");
         exit(EXIT_FAILURE);
     }
 
-    *archivo2 = fopen("bebidasBackup", "w+b");
+    *archivo2 = fopen("stockBebidas", "w+b");
     if (*archivo2 == NULL) {
         printf("Error al abrir el archivo alimentosBackup\n");
         exit(EXIT_FAILURE);
     }
 
-    *archivo3 = fopen("higieneBackup", "w+b");
+    *archivo3 = fopen("stockCuidadoPersonal", "w+b");
     if (*archivo3 == NULL) {
         printf("Error al abrir el archivo alimentosBackup\n");
         exit(EXIT_FAILURE);
     }
 
-    *archivo4 = fopen("limpiezaBackup", "w+b");
+    *archivo4 = fopen("stockLimpieza", "w+b");
     if (*archivo4 == NULL) {
         printf("Error al abrir el archivo alimentosBackup\n");
         exit(EXIT_FAILURE);

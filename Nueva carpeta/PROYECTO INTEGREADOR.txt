@@ -1,0 +1,34 @@
+PROYECTO INTEGREADOR
+Funciones por hacer:
+-Modificar el producto en todas las funciones
+-
+-
+-
+-
+-
+
+Funciones con problemas
+-
+-
+-
+-
+-
+
+Funciones que podriamos llegar a hacer
+-
+-
+-
+-
+-
+Funciones hechas:
+-Ingresar productos en todas las categorias
+-Eliminar el productos
+    °ultimo ingresado
+    °por codigo de producto
+    °por nombre
+-Buscar el producto
+    °por nombre general (aparecen todos los productos con un nombre similar).
+    °por codigo de producto 
+-
+-
+-

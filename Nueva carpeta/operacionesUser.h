@@ -26,7 +26,9 @@ void buscarProducto(t_ListaProducto**, const char*); //Buscamos los productos po
 
 //Funciones de Modificar.
 
-void modificarProducto(t_ListaProducto**, int, tr_Productos);
+void modificarProductoCompleto(t_ListaProducto**, int, tr_Productos);
+void modificar_Productos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto*, char*, int, int*);
+void modificarProductos(t_ListaProducto**, t_ListaProducto*, int);
 
 //Funciones varias necesarias para el funcionamiento de las funciones anteriores.
 
@@ -77,19 +79,7 @@ t_ListaProducto *buscarProductoNombre(t_ListaProducto **v_Lista, const char *nom
     return NULL;
 }
 
-void modificarProducto(t_ListaProducto **v_Lista, int pos, tr_Productos nuevoProducto) {
-    t_ListaProducto *aux;
-    int i;
-    aux = *v_Lista;
-    for(i=0; i<pos && aux != NULL; i++) {
-        aux = aux->sig;
-    }
-    if(aux != NULL) {
-        aux->producto = nuevoProducto;
-    } else {
-        printf("La posición es mayor que la longitud de la lista.\n");
-    }
-}
+
 
 void cargarProducto(t_ListaProducto **v_Lista, tr_Productos *producto) {
     printf("Ingrese el codigo del producto:");
@@ -164,7 +154,7 @@ void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
-            elimpUltimoroducto(v_Lista);
+            elimUltimoroducto(v_Lista);
                         break;
         }
         case 2:{
@@ -286,4 +276,68 @@ void imprimirProducto(t_ListaProducto *pProducto) {
                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
     }
 }
+
+void modificar_Productos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, 
+                            t_ListaProducto **v_Lista4, t_ListaProducto *pProducto, char *pNombreProduc, int opc, int *pCodProducto) {
+
+    printf("Seleccione la categoria en la que desea modificar el producto:(1-Alimentos | 2-Bebidas | 3-Cuidado Personal |4-Limpieza):");
+    scanf("%d", &opc);
+    switch(opc) {
+        case 1:{
+
+            break;
+        }
+        case 2:{
+
+            break;
+        }
+        case 3:{
+
+            break;
+        }
+        case 4:{
+
+            break;
+        }
+    }
+}
+
+void modificarProductos(t_ListaProducto **v_Lista, t_ListaProducto *producto, int opc) {
+    printf("");
+    scanf("%d", &opc);
+    switch(opc) {
+        case 1:{
+
+            break;
+        }
+        case 2:{
+
+            break;
+        }
+        case 3:{
+
+            break;
+        }
+        case 4:{
+
+            break;
+        }
+    }
+}
+
+void modificarProductoCompleto(t_ListaProducto **v_Lista, int pos, tr_Productos nuevoProducto) {
+    t_ListaProducto *aux;
+    int i;
+    aux = *v_Lista;
+    for(i=0; i<pos && aux != NULL; i++) {
+        aux = aux->sig;
+    }
+    if(aux != NULL) {
+        aux->producto = nuevoProducto;
+    } else {
+        printf("La posición es mayor que la longitud de la lista.\n");
+    }
+}
+
+
 #endif 

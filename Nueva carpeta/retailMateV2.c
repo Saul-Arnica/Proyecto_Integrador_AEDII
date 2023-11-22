@@ -9,14 +9,17 @@ void inicializacionPrograma();
 void menu();
 
 //Variables globales
+
 t_ListaProducto *alimentos, *bebidas, *cuidadoPersonal, *limpieza;
+
 FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza;
 
 //Funcion principal
 int main() {
     inicializacionPrograma();
     menu();
-    return 0;
+    system("pause");
+return 0;
 }
 
 void inicializacionPrograma() {
@@ -64,7 +67,7 @@ void menu() {
         }
     case 4:{
 
-            //modificarProducto(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &nuevoProducto, nombreProducto, opc);
+            modificar_Productos(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, &nuevoProducto, nombreProducto, opc, &codProducto);
             menu();    
                                                     break;
 
