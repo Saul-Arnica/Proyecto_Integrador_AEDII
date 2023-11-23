@@ -123,6 +123,9 @@ void crearUsuario() {
     if (cantUsuarios == 0) {
         printf("No hay usuarios creados. Debe crear el primer usuario.\n");
         ingresarUsuario();
+        strcpy(usuarios[numUsuarios].username, usuario);
+        strcpy(usuarios[numUsuarios].password, contrasena);
+        numUsuarios++;
     }
 }
 
