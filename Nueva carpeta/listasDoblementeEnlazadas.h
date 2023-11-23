@@ -139,7 +139,6 @@ void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
 //                                                         productoSuprimir->producto.nombreProduct);
 //         productoSuprimir = NULL;
 //         free(productoSuprimir);
-        
 //     }else {
 //         printf("No hay productos!....\n");
 //     }
@@ -182,7 +181,6 @@ void visualizarLista(t_ListaProducto *lista) {
                                                         productoActual->producto.precioUnit,productoActual->producto.cantTtal);
         productoActual = productoActual->sig;
     }
-    printf("\n");
 	}else{
         printf("No hay productos!");
     }

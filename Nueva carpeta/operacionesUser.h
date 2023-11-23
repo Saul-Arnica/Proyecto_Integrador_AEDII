@@ -26,18 +26,29 @@ void buscarProducto(t_ListaProducto**, const char*); //Buscamos los productos po
 
 //Funciones de Modificar.
 
-void modificarProductoCompleto(t_ListaProducto**, int, tr_Productos);
-void modificar_Productos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto*, char*, int, int*);
-void modificarProductos(t_ListaProducto**, t_ListaProducto*, int);
+
+void modificar_Productos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto*, char*, int, int*); //Elejimos la categoria
+void modificarProductos(t_ListaProducto**, t_ListaProducto*, int);//Elejimos que deseamos modificar
+void procesarCambio(t_ListaProducto**, t_ListaProducto*, int, int);
+void modificarProductoCompleto(t_ListaProducto**, int);
+
+//Funciones para visualizar
+
+void visualizar_Listas(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, int);
+void visualizarListas(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, int);
+void procesarVisualizarcion(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**,t_ListaProducto**, int);
+
 
 //Funciones varias necesarias para el funcionamiento de las funciones anteriores.
 
 char *ingresarNombreProducto(char*);
+
 int ingresarCodProducto(int);
+
+
 
 void imprimirProducto(t_ListaProducto*);
 
-void visualizarListas(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, int);
 
 //Interfaz Privada
 
@@ -78,8 +89,6 @@ t_ListaProducto *buscarProductoNombre(t_ListaProducto **v_Lista, const char *nom
     }
     return NULL;
 }
-
-
 
 void cargarProducto(t_ListaProducto **v_Lista, tr_Productos *producto) {
     printf("Ingrese el codigo del producto:");
@@ -210,7 +219,7 @@ void buscar_Productos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_
 }
 
 void buscar_Producto(t_ListaProducto **v_Lista, t_ListaProducto *pPoducto, char *pNombreProduc, int opc, int *pCodProducto) {
-    printf("Elija de que forma quiere buscar(1-Por nombre general | 2-Por Codio de producto):");
+    printf("Elija de que forma quiere buscar(1-Por nombre general | 2-Por codigo de producto):");
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
@@ -227,30 +236,6 @@ void buscar_Producto(t_ListaProducto **v_Lista, t_ListaProducto *pPoducto, char 
     }
 }
 
-void visualizarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
-                        t_ListaProducto **v_Lista3, t_ListaProducto **v_Lista4, int opc) {
-    
-    printf("Seleccione la categoria a ingresar(1-Alimentos 2-Bebidas 3-Cuidado Personal 4-Limpieza):");
-    scanf("%d", &opc);
-    switch(opc) {
-        case 1:{
-            visualizarLista(*v_Lista1);
-                    break;
-        }
-        case 2:{
-            visualizarLista(*v_Lista2);
-                    break;
-        }
-        case 3:{
-            visualizarLista(*v_Lista3);
-                    break;
-        }
-        case 4:{
-            visualizarLista(*v_Lista4);
-                    break;
-        }
-    }
-}
 
 char *ingresarNombreProducto(char *pNombreProduc) {
     printf("Ingrese el nombre del producto a buscar:");
@@ -284,60 +269,145 @@ void modificar_Productos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
-
-            break;
+            modificarProductos(v_Lista1, pProducto, opc);
+                break;
         }
-        case 2:{
-
-            break;
+        case 2:{    
+            modificarProductos(v_Lista2, pProducto, opc);
+                break;
         }
-        case 3:{
-
-            break;
+        case 3:{    
+            modificarProductos(v_Lista3, pProducto, opc);
+                break;
         }
-        case 4:{
-
-            break;
+        case 4:{    
+            modificarProductos(v_Lista4, pProducto, opc);
+                break;
         }
     }
 }
 
-void modificarProductos(t_ListaProducto **v_Lista, t_ListaProducto *producto, int opc) {
-    printf("");
+void modificarProductos(t_ListaProducto **v_Lista, t_ListaProducto *pProducto, int opc) {
+    int codProducto;
+    printf("Ingrese el codigo de producto a modificar:");
+    scanf("%d", &codProducto);
+    pProducto = buscarProduct(v_Lista, &codProducto);
+    printf("Elija que desea modificar del producto seleccionado(1-Precio | 2-Cantidad | 3-Descripcion | 4-Todo):");
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
-
-            break;
+            procesarCambio(v_Lista, pProducto, opc, codProducto);
+                                break;
         }
         case 2:{
+            procesarCambio(v_Lista, pProducto, opc, codProducto);
+                                break;
+        }
+        case 3:{    
+            procesarCambio(v_Lista, pProducto, opc, codProducto);
+                                break;
+        }
+    }
+}
 
-            break;
+void procesarCambio(t_ListaProducto **v_Lista, t_ListaProducto *producto, int opc, int pCodProducto) {
+    float nuevoPrecio;
+    int nuevaCantidad;
+    tString nuevaDescripcion;
+    switch(opc) {
+        case 1:{
+            printf("Ingrese el nuevo precio a cambiar:$");
+            scanf("%f", &nuevoPrecio);
+            producto->producto.precioUnit = nuevoPrecio;
+                                break;
+        }
+        case 2:{
+            printf("Ingrese la nueva cantidad a cambiar:");
+            scanf("%d", &nuevaCantidad);
+            producto->producto.cantTtal = nuevaCantidad;
+                                break;
         }
         case 3:{
-
-            break;
+            printf("Ingrese la nueva descripcion a cambiar:");
+            fflush(stdin);
+            scanf("%[^\n]s", nuevaDescripcion);
+            strcpy(producto->producto.nombreProduct, nuevaDescripcion);
+                                break;
         }
         case 4:{
-
+            modificarProductoCompleto(v_Lista, pCodProducto);
             break;
         }
     }
 }
 
-void modificarProductoCompleto(t_ListaProducto **v_Lista, int pos, tr_Productos nuevoProducto) {
+void modificarProductoCompleto(t_ListaProducto **v_Lista, int pCodProducto) {
     t_ListaProducto *aux;
     int i;
+    tr_Productos nuevoProducto;
+    // Pedir al usuario que introduzca los nuevos datos del producto
+    printf("Introduce el nuevo nombre del producto: ");
+    scanf("%s", nuevoProducto.nombreProduct);
+    printf("Introduce el nuevo precio del producto: ");
+    scanf("%f", &nuevoProducto.precioUnit);
+    printf("Introduce la nueva cantidad total del producto: ");
+    scanf("%d", &nuevoProducto.cantTtal);
+
     aux = *v_Lista;
-    for(i=0; i<pos && aux != NULL; i++) {
+    while(aux->producto.codProducto != nuevoProducto.codProducto) {
         aux = aux->sig;
     }
     if(aux != NULL) {
         aux->producto = nuevoProducto;
     } else {
-        printf("La posición es mayor que la longitud de la lista.\n");
+        printf("El producto a querer modificar no existe.\n");
     }
 }
 
+void visualizar_Listas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
+                        t_ListaProducto **v_Lista3, t_ListaProducto **v_Lista4, int opc) {
+    printf("Seleccione que desea visualizar(1-Categoria en especifico | 2-Todas las categorias):");
+    scanf("%d", &opc);
+    switch(opc) {
+        case 1:{
+            printf("Seleccione la categoria a ingresar(1-Alimentos 2-Bebidas 3-Cuidado Personal 4-Limpieza):");
+            scanf("%d", &opc);
+            switch(opc) {
+                case 1:{
+                    visualizarLista(*v_Lista1);
+                            break;
+                }
+                case 2:{
+                    visualizarLista(*v_Lista2);
+                            break;
+                }
+                case 3:{    
+                    visualizarLista(*v_Lista3);
+                            break;
+                }
+                case 4:{    
+                    visualizarLista(*v_Lista4);
+                            break;
+                }
+            }
+                            break;
+        }
+        case 2:{
+            procesarVisualizarcion(v_Lista1, v_Lista2, v_Lista3, v_Lista4, opc);
+                            break;
+        }
+    }
+}
+void procesarVisualizarcion(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3, t_ListaProducto **v_Lista4, int opc) {
+    printf("\nTodos los productos en la categoria de Alimentos son:\n");
+    visualizarLista(*v_Lista1);
+    printf("\nTodos los productos en la categoria de Bebidas son:\n");
+    visualizarLista(*v_Lista2);
+    printf("\nTodos los productos en la categoria de Cuidado personal son:\n");
+    visualizarLista(*v_Lista3);
+    printf("\nTodos los productos en la categoria de Limpieza son:\n");
+    visualizarLista(*v_Lista4);
+    printf("\n");
+}
 
 #endif 

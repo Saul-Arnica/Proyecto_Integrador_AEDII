@@ -1,63 +1,147 @@
+/*
+    switch(opc) {
+        case 1:{
 
-// switch(opc) {
-//                 case 1:{
-//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
-//                     pProducto = buscarProducto(v_Lista1, pProducto->producto.nombreProduct);
-//                     imprimirProducto(pProducto);
-//                     break;
+            break;
+        }
+        case 2:{
 
-//                 }
-//                 case 2:{  
+            break;
+        }
+        case 3:{    
 
-//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
-//                     pProducto = buscarProducto(v_Lista2, pProducto->producto.nombreProduct);
-//                     if(pProducto == NULL) {
-//                         printf("No se encontro\n");
-//                     }else{ 
-//                         printf("El producto buscado es: %d %s %.2f %d \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
-//                                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
-//                     }
-//                     break;
+            break;
 
-//                 }
-//                 case 3:{    
+        }
+        case 4:{    
 
-//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
-//                     pProducto = buscarProducto(v_Lista3, pProducto->producto.nombreProduct);
-//                     if(pProducto == NULL) {
-//                         printf("No se encontro\n");
-//                     }else{ 
-//                         printf("El producto buscado es: %d %s %.2f %d \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
-//                                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
-//                     }
-//                     break;
+            break;
 
-//                 }
-//                 case 4:{    
+        }
+    }   
 
-//                     strcpy(pProducto->producto.nombreProduct , ingresarNombreProducto(pNombreProduc));
-//                     pProducto = buscarProducto(v_Lista4, pProducto->producto.nombreProduct);
-//                     if(pProducto == NULL) {
-//                         printf("No se encontro\n");
-//                     }else{ 
-//                         printf("El producto buscado es: %d %s %.2f %d \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
-//                                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
-//                     }
-//                     break;
+typedef char tString[MAX_CHAR];
 
-//                 }
-//             }
+typedef struct {
+    tString usuario;
+    tString contraseña;
+}usuarioInfo;
+
+typedef usuarioInfo usuario[] = {
+    {"ADMIN", "Juli123"},
+    {"ENCARGADO", "Agus123"},
+};
+
+void abrirArchivo();
+void ingresarUsuario();
+void procesarUsuario();
+void cerrarArchivo();
+
+FILE *archivoAdmin;
+
+void abrirArchivo() {
+    archivoAdmin = fopen("usuario.dat", "rb");
+    if(archivoAdmin != NULL) {
+        printf("El archivo pudo abrirse con exito!...");
+    }else {
+        printf("El archivo no pudo abrirse!...);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void ingresarUsuario() {
+    printf("Ingrese su nombre de usuario: ");
+    fflush(stdin);
+    scanf("%[^\n]s", &usuario);
+    printf("Ingrese su contrasena: ");
+    fflush(stdin);
+    scanf("%[^\n]s", &contrasena);
+}
+
+void procesarUsuario() {
+    int i, usuarioValido = 0;
+    for (i = 0; i < sizeof(usuarios) / sizeof(usuarios[0]); i++) {
+        if (strcmp(usuario, usuario[i].usuario) == 0 && strcmp(contrasena, usuario[i].contraseña) == 0) {
+            printf("Bienvenido %s, puede modificar los productos!...", usuario);
+            usuarioValido = 1;
+        }
+    }
+    if(!usuarioValido) {
+        printf("Nombre de usuario o contraseña incorrectos.No tiene acceso a las modificaciones!...");
+    }
+}
+
+void cerrarArchivo() {
+    fclose(archivoAdmin);
+    printf("El archivo se cerro exitosamente!...");
+}
 
 
 
-// void imprimirProducto(t_ListaProducto *pProducto) {
-//     if(pProducto == NULL) {
-//         printf("No se encontro\n");
-//     }else{ 
-//         printf("\tLos productos con esa descripcion son:\n");
-//         printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
-//         printf("| %d | %s | %.2f | %d |\n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
-//                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
-//     }
 
-// } */
+
+
+
+
+typedef char tString[MAX_CHAR];
+
+typedef struct {
+    tString usuario;
+    tString contraseña;
+}usuarioInfo;
+typedef usuarioInfo usuarios[MAX_USERS];
+
+void abrirArchivo();
+void ingresarUsuario();
+void crearUsuario();
+void procesarUsuario();
+void cerrarArchivo();
+
+int cantUsuarios = 0;
+FILE *archivoAdmin;
+
+void abrirArchivo() {
+    archivoAdmin = fopen("usuario.dat", "rb");
+    if(archivoAdmin != NULL) {
+        printf("El archivo pudo abrirse con exito!...");
+    }else {
+        printf("El archivo no pudo abrirse!...);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void ingresarUsuario() {
+    printf("Ingrese su nombre de usuario: ");
+    fflush(stdin);
+    scanf("%[^\n]s", &usuario);
+    printf("Ingrese su contrasena: ");
+    fflush(stdin);
+    scanf("%[^\n]s", &contrasena);
+}
+
+void crearUsuario() {
+    if (cantUsuarios == 0) {
+        printf("No hay usuarios creados. Debe crear el primer usuario.\n");
+        ingresarUsuario();
+    }
+}
+
+void procesarUsuario() {
+    int i, usuarioValido = 0;
+    for (i = 0; i < sizeof(usuarios) / sizeof(usuarios[0]); i++) {
+        if (strcmp(usuario, usuario[i].usuario) == 0 && strcmp(contrasena, usuario[i].contraseña) == 0) {
+            printf("Bienvenido %s, puede modificar los productos!...", usuario);
+            usuarioValido = 1;
+        }
+    }
+    if(!usuarioValido) {
+        printf("Nombre de usuario o contraseña incorrectos.No tiene acceso a las modificaciones!...");
+    }
+}
+
+void cerrarArchivo() {
+    fclose(archivoAdmin);
+    printf("El archivo se cerro exitosamente!...");
+}
+*/
+

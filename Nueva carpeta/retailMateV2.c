@@ -5,6 +5,7 @@
 
 //#include"finDePrograma.h"
 //Prototipado de funciones
+
 void inicializacionPrograma();
 void menu();
 
@@ -12,11 +13,13 @@ void menu();
 
 t_ListaProducto *alimentos, *bebidas, *cuidadoPersonal, *limpieza;
 
-FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza;
+FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza, *archivoAdminstradores, *archivoEmpleados;
+
 
 //Funcion principal
 int main() {
     inicializacionPrograma();
+    imprimirTitulo();
     menu();
     system("pause");
 return 0;
@@ -31,6 +34,7 @@ void inicializacionPrograma() {
             cargarDesdeArchivo(&cuidadoPersonal, "stockCuidadoPersonal");
             cargarDesdeArchivo(&limpieza, "stockLimpieza");
         }else{
+
             inicializarArchivos(&stockAlimentos, &stockBebidas, &stockCuidadoPersonal, &stockLimpieza);
         }
 }
@@ -41,7 +45,8 @@ void menu() {
     tr_Productos product;
     t_ListaProducto nuevoProducto;
     printf("\nElija una opcion:"
-    "1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto | 5-Visualizar Productos :");
+    "1-Ingresar un producto | 2-Eliminar un producto | 3-Buscar Un producto | 4-Modificar un producto | 5-Visualizar Productos |"
+    " 0-Salir:");
     scanf("%d", &opc);
     switch(opc) {
         case 1:{
@@ -74,10 +79,22 @@ void menu() {
         }
         case 5:{
 
-            visualizarListas(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, opc);
+            visualizar_Listas(&alimentos, &bebidas, &cuidadoPersonal, &limpieza, opc);
             menu();
                                                     break;
 
         }
+        case 0:{
+            printf("Gracias por usar nuestro software!\n");
+            printf("\tCualquier incoveniente enviar al correo: ""retailMate@outlook.com""");
+            sleep(5);
+            printf("\n");
+        }
+        default:{
+            printf("Opcion incorrecta\n");
+            sleep(1);
+            printf("\033[H\033[J");
+            menu();
+        } 
     }
 }
