@@ -1,9 +1,8 @@
-#include"listasDoblementeEnlazadas.h"
 #include"inicioDePrograma.h"
 #include"operacionesBasicas.h"
 #include"operacionesUser.h"
+#include"finDePrograma.h"
 
-//#include"finDePrograma.h"
 //Prototipado de funciones
 
 void inicializacionStock();
@@ -24,11 +23,12 @@ FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza, *arc
 
 //Funcion principal
 int main() {
-    //inicializacionStock();
+    inicializacionStock();
     //imprimirTitulo();
     //inicioPrograma();
-    imprimirGuardado();
-    //system("pause");
+    //imprimirGuardado();
+    menu1();
+    system("pause");
 return 0;
 }
 
@@ -45,10 +45,10 @@ void inicializacionStock() {
 
     }else{
 
-        inicializarArchivo(&stockAlimentos);
-        inicializarArchivo(&stockBebidas);
-        inicializarArchivo(&stockCuidadoPersonal);
-        inicializarArchivo(&stockLimpieza);
+        inicializarArchivo(&stockAlimentos, "stockAlimentos");
+        inicializarArchivo(&stockBebidas, "stockBebidas");
+        inicializarArchivo(&stockCuidadoPersonal, "stockCuidadoPersonal");
+        inicializarArchivo(&stockLimpieza, "stockLimpieza");
 
     }
 }
@@ -74,7 +74,7 @@ void inicioPrograma() {
             }
 
         }else{
-            inicializarArchivo(&archivoUsuarios);
+            inicializarArchivo(&archivoUsuarios, "archivoUsuarios");
             printf("\t\t\tBienvenido al Software RetailMate\n");
             printf("Ingrese un usuario Administrador\n\n");
             usuario = ingresarUsuario();
@@ -209,5 +209,3 @@ void menu2() {
         } 
     }
 }
-
-

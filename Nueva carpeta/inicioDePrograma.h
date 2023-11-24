@@ -7,7 +7,7 @@
 
 void inicializarListas(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**);
 
-void inicializarArchivo(FILE**);
+void inicializarArchivo(FILE**, const char*);
 
 void cargarDesdeArchivo(t_ListaProducto**, const char*);
 
@@ -41,15 +41,15 @@ void inicializarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
 
 }
 
-void inicializarArchivo(FILE **archivo1) {
+void inicializarArchivo(FILE **archivo, const char *pNombreArchivo) {
 
-    *archivo1 = fopen("stockAlimentos", "w+b");
-    if (*archivo1 == NULL) {
+    *archivo = fopen(pNombreArchivo, "w+b");
+    if (*archivo == NULL) {
         printf("Error al abrir el archivo alimentosBackup\n");
         exit(EXIT_FAILURE);
     }
 
-    fclose(*archivo1);
+    fclose(*archivo);
 }
 
 void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {

@@ -158,9 +158,9 @@ void visualizarLista(t_ListaProducto *lista) {
         while(productoActual->ant != NULL) {
             productoActual = productoActual->ant;
         }
-    printf("\033|0m COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |1m\033\n");
+    printf("| %-13s | %-20s | %-9s | %-9s |\n", "COD PRODUCTO", "NOMBRE DE PRODUCTO", "PRECIO U.", "CANT TTAL");
     while (productoActual != NULL) {
-        printf("| %-8d |  %-15s  |  $%-12.2f  | %105d | \n", productoActual->producto.codProducto,productoActual->producto.nombreProduct, 
+        printf("| %-14d| %-20s | $%-8.2f | %-9d | \n", productoActual->producto.codProducto,productoActual->producto.nombreProduct, 
                                                         productoActual->producto.precioUnit,productoActual->producto.cantTtal);
         productoActual = productoActual->sig;
     }
