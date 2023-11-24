@@ -3,6 +3,6 @@
         "listasdoblementeenlazadas.h": "c",
         "iniciodeprograma.h": "c",
         "operacionesbasicas.h": "c",
-        
+        "operacionesuser.h": "c"
     }
 }

@@ -3,13 +3,18 @@
 
 #include"operacionesBasicas.h"
 
-
-
 //Interfaz Publica
 
 void inicializarListas(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**);
-void inicializarArchivos(FILE**, FILE**, FILE**, FILE**);
+
+void inicializarArchivo(FILE**);
+
 void cargarDesdeArchivo(t_ListaProducto**, const char*);
+
+tr_UsuarioInfo ingresarUsuario();
+
+int verificarUsuarios(FILE**, const char*, tr_UsuarioInfo);
+
 bool archivoExiste(const char*);
 
 //Interfaz Privada
@@ -36,7 +41,7 @@ void inicializarListas(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2,
 
 }
 
-void inicializarArchivos(FILE **archivo1, FILE **archivo2, FILE **archivo3, FILE **archivo4) {
+void inicializarArchivo(FILE **archivo1) {
 
     *archivo1 = fopen("stockAlimentos", "w+b");
     if (*archivo1 == NULL) {
@@ -44,29 +49,7 @@ void inicializarArchivos(FILE **archivo1, FILE **archivo2, FILE **archivo3, FILE
         exit(EXIT_FAILURE);
     }
 
-    *archivo2 = fopen("stockBebidas", "w+b");
-    if (*archivo2 == NULL) {
-        printf("Error al abrir el archivo alimentosBackup\n");
-        exit(EXIT_FAILURE);
-    }
-
-    *archivo3 = fopen("stockCuidadoPersonal", "w+b");
-    if (*archivo3 == NULL) {
-        printf("Error al abrir el archivo alimentosBackup\n");
-        exit(EXIT_FAILURE);
-    }
-
-    *archivo4 = fopen("stockLimpieza", "w+b");
-    if (*archivo4 == NULL) {
-        printf("Error al abrir el archivo alimentosBackup\n");
-        exit(EXIT_FAILURE);
-    }
-
     fclose(*archivo1);
-    fclose(*archivo2);
-    fclose(*archivo3);
-    fclose(*archivo4);
-
 }
 
 void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
@@ -106,6 +89,53 @@ void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
     fclose(archivo);
 }
 
+int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_UsuarioInfo pUsuarioIngresado) {
+
+    tr_UsuarioInfo usuarioRegistro;
+    *archivoUsuarios = fopen(nombreArchivo, "rb");
+
+    if (*archivoUsuarios == NULL) {
+        printf("Error al abrir el archivo alimentosBackup\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fread(&usuarioRegistro, sizeof(tr_UsuarioInfo), 1, *archivoUsuarios);
+
+    while(!feof(*archivoUsuarios)) {
+
+        if(strcmp(usuarioRegistro.usuario, pUsuarioIngresado.usuario) == 0 
+        && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol && pUsuarioIngresado.rol == 1) {
+
+            return 1;
+
+        }else if(strcmp(usuarioRegistro.usuario, pUsuarioIngresado.usuario) == 0 
+        && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol && pUsuarioIngresado.rol == 2) {
+
+            return 2;
+
+        }else{
+
+            return 0;
+
+        }
+        fread(&usuarioRegistro, sizeof(tr_UsuarioInfo), 1, *archivoUsuarios);
+    }
+    fclose(*archivoUsuarios);
+}
+
+tr_UsuarioInfo ingresarUsuario() {
+    tr_UsuarioInfo usuario;
+    printf("Ingrese su nombre de usuario:");
+    fflush(stdin);
+    scanf("%[^\n]s", &usuario.usuario);
+    printf("Ingrese su contrasena:");
+    fflush(stdin);
+    scanf("%[^\n]s", &usuario.contraseña);
+    printf("Ingrese su rol(1-Administrador | 2-Empleado):");
+    scanf("%d", &usuario.rol);
+    return usuario;
+}
+
 bool archivoExiste(const char *nombreArchivo) {
     FILE *archivo = fopen(nombreArchivo, "rb");
     if(archivo != NULL){
@@ -115,4 +145,5 @@ bool archivoExiste(const char *nombreArchivo) {
         return false;
     }
 }
+
 #endif

@@ -20,12 +20,11 @@
         }
     }   
 
+
+
 typedef char tString[MAX_CHAR];
 
-typedef struct {
-    tString usuario;
-    tString contraseña;
-}usuarioInfo;
+
 
 typedef usuarioInfo usuario[] = {
     {"ADMIN", "Juli123"},
@@ -49,14 +48,7 @@ void abrirArchivo() {
     }
 }
 
-void ingresarUsuario() {
-    printf("Ingrese su nombre de usuario: ");
-    fflush(stdin);
-    scanf("%[^\n]s", &usuario);
-    printf("Ingrese su contrasena: ");
-    fflush(stdin);
-    scanf("%[^\n]s", &contrasena);
-}
+
 
 void procesarUsuario() {
     int i, usuarioValido = 0;
@@ -82,6 +74,8 @@ void cerrarArchivo() {
 
 
 
+#define MAX_CHAR 25
+#define MAX_USUARIOS 3
 
 typedef char tString[MAX_CHAR];
 
@@ -89,10 +83,10 @@ typedef struct {
     tString usuario;
     tString contraseña;
 }usuarioInfo;
-typedef usuarioInfo usuarios[MAX_USERS];
+typedef usuarioInfo usuario[MAX_USUARIOS];
 
 void abrirArchivo();
-void ingresarUsuario();
+usuarioInfo ingresarUsuario();
 void crearUsuario();
 void procesarUsuario();
 void cerrarArchivo();
@@ -110,28 +104,25 @@ void abrirArchivo() {
     }
 }
 
-void ingresarUsuario() {
-    printf("Ingrese su nombre de usuario: ");
-    fflush(stdin);
-    scanf("%[^\n]s", &usuario);
-    printf("Ingrese su contrasena: ");
-    fflush(stdin);
-    scanf("%[^\n]s", &contrasena);
-}
+
 
 void crearUsuario() {
+    usuarioInfo usuario;
     if (cantUsuarios == 0) {
         printf("No hay usuarios creados. Debe crear el primer usuario.\n");
+        usuario = ingresarUsuario();
+        strcpy(usuario[cantUsuarios].usuario, usuario);
+        strcpy(usuario[cantUsuarios].contraseña, contrasena);
+        cantUsuarios++;
+    }else{
+        printf("Ya hay usuarios creados!...\n");
         ingresarUsuario();
-        strcpy(usuarios[numUsuarios].username, usuario);
-        strcpy(usuarios[numUsuarios].password, contrasena);
-        numUsuarios++;
     }
 }
 
 void procesarUsuario() {
     int i, usuarioValido = 0;
-    for (i = 0; i < sizeof(usuarios) / sizeof(usuarios[0]); i++) {
+    for (i = 0; i < sizeof(usuario) / sizeof(usuario[0]); i++) {
         if (strcmp(usuario, usuario[i].usuario) == 0 && strcmp(contrasena, usuario[i].contraseña) == 0) {
             printf("Bienvenido %s, puede modificar los productos!...", usuario);
             usuarioValido = 1;

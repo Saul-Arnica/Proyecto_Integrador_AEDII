@@ -15,6 +15,12 @@
 typedef char tString[MAX_CHAR];
 
 typedef struct {
+    tString usuario;
+    tString contraseña;
+    int rol;
+}tr_UsuarioInfo;
+
+typedef struct {
     int codProducto;
     tString nombreProduct;
     float precioUnit;
@@ -27,7 +33,6 @@ typedef struct producto {
     struct producto *ant;
 }t_ListaProducto;
 
-
 // Prototipos de funciones
 
 void inicializarLista(t_ListaProducto**);
@@ -39,6 +44,7 @@ void elimUltimoroducto(t_ListaProducto **);
 void visualizarLista(t_ListaProducto*);
 
 // Implementacion de las funciones
+
 void inicializarLista(t_ListaProducto **lista) {
     *lista = NULL;
 }
@@ -122,28 +128,6 @@ void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
     free(aux);
 }
 
-// void elimUltimoroducto(t_ListaProducto **v_Lista) {
-//     if(!listaVacia(*v_Lista)) {
-//         t_ListaProducto *productoSuprimir;
-//         productoSuprimir = *v_Lista;
-//         while(productoSuprimir->sig != NULL) {
-//             productoSuprimir = productoSuprimir->sig;
-//         }
-//         if(productoSuprimir->ant != NULL) {
-//             productoSuprimir->ant->sig = NULL;
-//         }
-//         productoSuprimir->ant = NULL;
-//         productoSuprimir->sig = NULL;
-//         printf("| COD PRODUCTO | NOMB PRODUCTO |\n");
-//         printf("Se elimino el producto: %d %s...\n", productoSuprimir->producto.codProducto,
-//                                                         productoSuprimir->producto.nombreProduct);
-//         productoSuprimir = NULL;
-//         free(productoSuprimir);
-//     }else {
-//         printf("No hay productos!....\n");
-//     }
-// }
-
 void elimUltimoroducto(t_ListaProducto **v_Lista) {
     if(!listaVacia(*v_Lista)) {
         t_ListaProducto *productoSuprimir;
@@ -167,7 +151,6 @@ void elimUltimoroducto(t_ListaProducto **v_Lista) {
     }
 }
 
-
 void visualizarLista(t_ListaProducto *lista) {
     t_ListaProducto *productoActual;
     productoActual = lista;
@@ -175,9 +158,9 @@ void visualizarLista(t_ListaProducto *lista) {
         while(productoActual->ant != NULL) {
             productoActual = productoActual->ant;
         }
-    printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
+    printf("\033|0m COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |1m\033\n");
     while (productoActual != NULL) {
-        printf("| %-8d | %-12s | %-5.2f | %-5d | \n", productoActual->producto.codProducto,productoActual->producto.nombreProduct, 
+        printf("| %-8d |  %-15s  |  $%-12.2f  | %105d | \n", productoActual->producto.codProducto,productoActual->producto.nombreProduct, 
                                                         productoActual->producto.precioUnit,productoActual->producto.cantTtal);
         productoActual = productoActual->sig;
     }
@@ -185,4 +168,5 @@ void visualizarLista(t_ListaProducto *lista) {
         printf("No hay productos!");
     }
 }
+
 #endif
