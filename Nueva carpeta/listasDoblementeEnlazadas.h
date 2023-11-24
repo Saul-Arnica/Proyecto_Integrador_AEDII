@@ -15,7 +15,8 @@
 typedef char tString[MAX_CHAR];
 
 typedef struct {
-    tString usuario;
+    int ID;
+    tString nombre;
     tString contraseña;
     int rol;
 }tr_UsuarioInfo;

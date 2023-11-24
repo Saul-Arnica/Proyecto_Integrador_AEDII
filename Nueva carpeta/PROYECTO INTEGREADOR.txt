@@ -1,25 +1,41 @@
 PROYECTO INTEGREADOR
 Funciones por hacer:
--
--
--
--
--
--
+-Gestión de Usuarios:
 
-Funciones con problemas
--
--
--
--
--
+Crear nuevos usuarios en el sistema.
+Eliminar usuarios existentes. //LISTO
+Modificar la información de los usuarios (cambiar contraseña, actualizar datos, etc.).
 
-Funciones que podriamos llegar a hacer
--
--
--
--
--
+Control de Acceso:
+
+Asignar permisos y roles a los usuarios (administrador, usuario estándar, etc.).
+Supervisar y controlar quién tiene acceso a determinadas funciones o secciones del sistema.
+
+Mantenimiento del Sistema:
+
+Realizar copias de seguridad (backups) de datos importantes.
+Actualizar y mantener el software del sistema.
+Monitorear el rendimiento del sistema y resolver problemas si surgen.
+
+Gestión de Contenido:
+
+Agregar, editar o eliminar contenido (en aplicaciones, sitios web, etc.).
+Revisar y aprobar contenido generado por usuarios si es aplicable.
+
+Reportes y Análisis:
+
+Generar informes y estadísticas sobre el uso del sistema.
+Analizar datos para tomar decisiones informadas sobre mejoras o cambios en el sistema.
+
+Comunicación y Soporte:
+
+Proporcionar soporte técnico a los usuarios en caso de problemas.
+Comunicarse con los usuarios para proporcionar actualizaciones, avisos, etc.
+
+Seguridad:
+
+Gestionar la seguridad del sistema (implementación de medidas de seguridad, gestión de contraseñas, etc.).
+Supervisar la detección y respuesta a posibles amenazas o brechas de seguridad.
 
 Funciones hechas:
 -Ingresar productos en todas las categorias

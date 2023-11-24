@@ -1,14 +1,16 @@
 #include"inicioDePrograma.h"
 #include"operacionesBasicas.h"
+#include"operacionesAdmin.h"
 #include"operacionesUser.h"
 #include"finDePrograma.h"
 
-//Prototipado de funciones
 
+//Prototipado de funciones
 void inicializacionStock();
 void inicioPrograma();
 void menu1();
 void menu2();
+void terminacionDePrograma();
 
 
 //Variables globales
@@ -30,6 +32,12 @@ int main() {
     menu1();
     system("pause");
 return 0;
+}
+
+//Implementacion de funciones
+
+void iniciarPrograma() {
+
 }
 
 void inicializacionStock() {
@@ -60,11 +68,11 @@ void inicioPrograma() {
             usuario = ingresarUsuario();
 
             if(verificarUsuarios(&archivoUsuarios, "archivoUsuarios", usuario) == 1) {
-                printf("Bienvenido administrador %s", usuario.usuario);
+                printf("Bienvenido administrador %d - %s", usuario.ID, usuario.nombre);
                 sleep(2);
                 menu1();
             }else if(verificarUsuarios(&archivoUsuarios, "archivoUsuarios", usuario) == 2) {
-                printf("Bienvenido empleado %s", usuario.usuario);
+                printf("Bienvenido empleado %d - %s", usuario.ID, usuario.nombre);
                 sleep(2);
                 menu2();
             }else if(verificarUsuarios(&archivoUsuarios, "archivoUsuarios", usuario) == 0) {
@@ -77,8 +85,8 @@ void inicioPrograma() {
             inicializarArchivo(&archivoUsuarios, "archivoUsuarios");
             printf("\t\t\tBienvenido al Software RetailMate\n");
             printf("Ingrese un usuario Administrador\n\n");
-            usuario = ingresarUsuario();
-            printf("Bienvenido administrador %s", usuario.usuario);
+            usuario = registrarUsuario();
+            printf("Bienvenido administrador %d - %s", usuario.ID, usuario.nombre);
             sleep(2);
             menu1();
         }
@@ -130,6 +138,21 @@ void menu1() {
 
         }
         case 6:{
+            printf("Opciones disponibles(1-Agregar usuario | 2-Elimiar usuario):");
+            scanf("%d", &opc);
+            switch(opc) {
+                case 1:{
+                    usuario = registrarUsuario();
+                    //funcion de guardar
+                    printf("Usuario %d - %s guardado exitosamente\n", usuario.ID, usuario.nombre);
+                                                    break;
+                }
+                case 2:{
+                    printf("Ingrese el ID del usuario a eliminar:");
+                    scanf("%d", usuario.ID);
+                    eliminarUsuario(usuario.ID);
+                }
+            }
             menu1();
                                                     break;
         }

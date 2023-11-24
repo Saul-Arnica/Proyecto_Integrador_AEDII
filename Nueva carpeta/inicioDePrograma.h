@@ -5,6 +5,7 @@
 
 //Interfaz Publica
 
+
 void inicializarListas(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**);
 
 void inicializarArchivo(FILE**, const char*);
@@ -45,7 +46,7 @@ void inicializarArchivo(FILE **archivo, const char *pNombreArchivo) {
 
     *archivo = fopen(pNombreArchivo, "w+b");
     if (*archivo == NULL) {
-        printf("Error al abrir el archivo alimentosBackup\n");
+        printf("Error al abrir el archivo!!\n");
         exit(EXIT_FAILURE);
     }
 
@@ -92,10 +93,11 @@ void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
 int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_UsuarioInfo pUsuarioIngresado) {
 
     tr_UsuarioInfo usuarioRegistro;
+
     *archivoUsuarios = fopen(nombreArchivo, "rb");
 
     if (*archivoUsuarios == NULL) {
-        printf("Error al abrir el archivo alimentosBackup\n");
+        printf("Error al abrir el archivo!!\n");
         exit(EXIT_FAILURE);
     }
 
@@ -103,13 +105,13 @@ int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_Usu
 
     while(!feof(*archivoUsuarios)) {
 
-        if(strcmp(usuarioRegistro.usuario, pUsuarioIngresado.usuario) == 0 
-        && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol && pUsuarioIngresado.rol == 1) {
+        if(strcmp(usuarioRegistro.nombre, pUsuarioIngresado.nombre) == 0 
+                    && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol == 1) {
 
             return 1;
 
-        }else if(strcmp(usuarioRegistro.usuario, pUsuarioIngresado.usuario) == 0 
-        && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol && pUsuarioIngresado.rol == 2) {
+        }else if(strcmp(usuarioRegistro.nombre, pUsuarioIngresado.nombre) == 0 
+                    && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol == 2) {
 
             return 2;
 
@@ -125,14 +127,12 @@ int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_Usu
 
 tr_UsuarioInfo ingresarUsuario() {
     tr_UsuarioInfo usuario;
-    printf("Ingrese su nombre de usuario:");
+    printf("\nIngrese su nombre de usuario:");
     fflush(stdin);
-    scanf("%[^\n]s", &usuario.usuario);
+    scanf("%[^\n]s", &usuario.nombre);
     printf("Ingrese su contrasena:");
     fflush(stdin);
     scanf("%[^\n]s", &usuario.contraseña);
-    printf("Ingrese su rol(1-Administrador | 2-Empleado):");
-    scanf("%d", &usuario.rol);
     return usuario;
 }
 

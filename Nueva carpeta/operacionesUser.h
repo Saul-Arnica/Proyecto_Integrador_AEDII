@@ -222,10 +222,10 @@ void buscarProducto(t_ListaProducto **v_Lista, const char *nombreProducto) {
     t_ListaProducto *productoActual;
     productoActual = *v_Lista;
     printf("\tLos productos con esa descripcion son:\n");
-    printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
+    printf("| %-13s | %-20s | %-9s | %-9s |\n", "COD PRODUCTO", "NOMBRE DE PRODUCTO", "PRECIO U.", "CANT TTAL");
     while(productoActual != NULL) {
         if(strstr(productoActual->producto.nombreProduct, nombreProducto) != NULL) {
-            printf("| %d | %s | $%.2f | %d |\n", productoActual->producto.codProducto, productoActual->producto.nombreProduct,
+            printf("| %-14d| %-20s | $%-8.2f | %-9d | \n", productoActual->producto.codProducto, productoActual->producto.nombreProduct,
                                                     productoActual->producto.precioUnit, productoActual->producto.cantTtal);
         }
         productoActual = productoActual->sig;
@@ -406,8 +406,8 @@ void imprimirProducto(t_ListaProducto *pProducto) {
         printf("No se encontro\n");
     }else{ 
         printf("\tEl producto con ese codigo es:\n");
-        printf("| COD PRODUCTO | NOMB PRODUCTO | PRECIO UNITARIO | CANT TOTAL |\n");
-        printf("| %d | %s | %.2f | %d |\n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
+        printf("| %-13s | %-20s | %-9s | %-9s |\n", "COD PRODUCTO", "NOMBRE DE PRODUCTO", "PRECIO U.", "CANT TTAL");
+        printf("| %-14d| %-20s | $%-8.2f | %-9d | \n", pProducto->producto.codProducto, pProducto->producto.nombreProduct,
                                                             pProducto->producto.precioUnit, pProducto->producto.cantTtal);
     }
 }
