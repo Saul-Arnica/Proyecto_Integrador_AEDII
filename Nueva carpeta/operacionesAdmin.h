@@ -6,7 +6,7 @@
 
 //Interfaz Publica
 void visualizarUsuarios(FILE**, const char*);
-void eliminarUsuario(tr_UsuarioInfo);
+void eliminarUsuario(tr_UsuarioInfo**);
 tr_UsuarioInfo registrarUsuario();
 
 
@@ -75,7 +75,7 @@ void visualizarUsuarios(FILE **archivo, const char *nombreArchivo) {
     printf("El usuario con ID %d fue eliminado exitosamente\n", pUsuario.ID);
 }*/
 
-void eliminarUsuario(tr_UsuarioInfo pUsuario) {
+void eliminarUsuario(tr_UsuarioInfo **pUsuario) {
     FILE *archivoUsuarios;
     FILE *archivoTemporal;
     tr_UsuarioInfo usuario;    
@@ -91,7 +91,7 @@ void eliminarUsuario(tr_UsuarioInfo pUsuario) {
 
     fread(&usuario, sizeof(tr_UsuarioInfo), 1, archivoUsuarios);
     while (!feof(archivoUsuarios)) {
-        if(pUsuario.ID != usuario.ID) {
+        if((*pUsuario)->ID != usuario.ID) {
             fwrite(&usuario, sizeof(tr_UsuarioInfo), 1, archivoTemporal);
         }
         fread(&usuario, sizeof(tr_UsuarioInfo), 1, archivoUsuarios);
@@ -121,7 +121,7 @@ void eliminarUsuario(tr_UsuarioInfo pUsuario) {
     fclose(archivoUsuarios);
     fclose(archivoTemporal);
 
-    printf("El usuario con ID %d fue eliminado exitosamente\n", pUsuario.ID);
+    printf("El usuario con ID %d fue eliminado exitosamente\n", (*pUsuario)->ID);
 
     if(remove("archivoSinImportancia.dat") != 0) {
         clearerr(archivoTemporal);

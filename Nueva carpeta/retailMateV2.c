@@ -15,7 +15,7 @@ void terminacionDePrograma();
 
 t_ListaProducto *alimentos, *bebidas, *cuidadoPersonal, *limpieza;
 
-tr_UsuarioInfo usuario;
+tr_UsuarioInfo *usuario;
 
 FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza, *archivoUsuarios;
 
@@ -54,21 +54,20 @@ void inicializacionStock() {
 
 void inicioPrograma() {
     int estado;
-
     if(archivoExiste("archivoUsuarios.dat")) {
 
 
         usuario = ingresarUsuario();
-        estado = verificarUsuarios(&archivoUsuarios, "archivoUsuarios.dat", usuario);
+        estado = verificarUsuarios(&archivoUsuarios, "archivoUsuarios.dat", &usuario);
         switch(estado) {
             case 1:{
-                printf("Bienvenido administrador %d - %s", usuario.ID, usuario.nombre);
+                printf("Bienvenido administrador %d - %s", usuario->ID, usuario->nombre);
                 sleep(2);
                 menu1();
                                                     break;
             }
             case 2:{
-                printf("Bienvenido empleado %d - %s", usuario.ID, usuario.nombre);
+                printf("Bienvenido empleado %d - %s", usuario->ID, usuario->nombre);
                 sleep(2);
                 menu2();
                                                     break;
@@ -86,9 +85,9 @@ void inicioPrograma() {
         inicializarArchivo(&archivoUsuarios, "archivoUsuarios.dat");
         printf("\t\t\tBienvenido al Software RetailMate\n");
         printf("Ingrese un usuario Administrador\n\n");
-        usuario = registrarUsuario();
-        grabarUsuario(&archivoUsuarios, usuario, "archivoUsuarios.dat");
-        printf("Bienvenido administrador %d - %s", usuario.ID, usuario.nombre);
+        *usuario = registrarUsuario();
+        grabarUsuario(&archivoUsuarios, &usuario, "archivoUsuarios.dat");
+        printf("Bienvenido administrador %d - %s", usuario->ID, usuario->nombre);
         sleep(2);
         menu1();
 
@@ -145,16 +144,16 @@ void menu1() {
             scanf("%d", &opc);
             switch(opc) {
                 case 1:{
-                    usuario = registrarUsuario();
-                    grabarUsuario(&archivoUsuarios, usuario, "archivoUsuarios.dat");
-                    printf("Usuario %d - %s guardado exitosamente\n", usuario.ID, usuario.nombre);
+                    *usuario = registrarUsuario();
+                    grabarUsuario(&archivoUsuarios, &usuario, "archivoUsuarios.dat");
+                    printf("Usuario %d - %s guardado exitosamente\n", usuario->ID, usuario->nombre);
                                                     break;
                 }
                 case 2:{
                     int confirmacion;
                     printf("Ingrese el ID del usuario a eliminar:");
-                    scanf("%d", &usuario.ID);
-                    eliminarUsuario(usuario);
+                    scanf("%d", &usuario->ID);
+                    eliminarUsuario(&usuario);
                                                     break;
                 }
                 case 3:{
@@ -166,8 +165,8 @@ void menu1() {
                                                     break;
         }
         case 0:{
-            printf("Gracias por usar nuestro software!\n");
-            printf("\n\tCualquier incoveniente enviar al correo: ""retailMate@outlook.com""");
+            printf("\n\t\t\tGracias por usar nuestro software!\n");
+            printf("\tCualquier incoveniente enviar al correo: ""retailMate@outlook.com""");
             terminacionDePrograma();
             imprimirGuardado();
             printf("\n");
@@ -228,9 +227,10 @@ void menu2() {
 
         }
         case 0:{
-            printf("Gracias por usar nuestro software!\n");
+            printf("\n\t\t\tGracias por usar nuestro software!\n");
             printf("\tCualquier incoveniente enviar al correo: ""retailMate@outlook.com""");
-            sleep(4);
+            terminacionDePrograma();
+            imprimirGuardado();
             printf("\n");
                                                     break;
         }
@@ -245,5 +245,5 @@ void menu2() {
 
 void terminacionDePrograma() {
     procesarGuardado(&stockAlimentos, &stockBebidas, &stockCuidadoPersonal, &stockLimpieza, &archivoUsuarios,
-                        &alimentos, &bebidas, &cuidadoPersonal, &limpieza, usuario);
+                        &alimentos, &bebidas, &cuidadoPersonal, &limpieza);
 }

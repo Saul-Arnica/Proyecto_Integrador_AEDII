@@ -12,9 +12,9 @@ void inicializarArchivo(FILE**, const char*);
 
 void cargarDesdeArchivo(t_ListaProducto**, const char*);
 
-tr_UsuarioInfo ingresarUsuario();
+tr_UsuarioInfo *ingresarUsuario();
 
-int verificarUsuarios(FILE**, const char*, tr_UsuarioInfo);
+int verificarUsuarios(FILE**, const char*, tr_UsuarioInfo**);
 
 bool archivoExiste(const char*);
 
@@ -92,7 +92,7 @@ void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
     fclose(archivo);
 }
 
-int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_UsuarioInfo pUsuarioIngresado) {
+int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_UsuarioInfo **pUsuarioIngresado) {
 
     bool flag = false;
 
@@ -109,19 +109,18 @@ int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_Usu
 
     while(!feof(*archivoUsuarios)) {
 
-
-        if(strcmp(usuarioRegistro.nombre, pUsuarioIngresado.nombre) == 0 
-                    && strcmp(usuarioRegistro.contra, pUsuarioIngresado.contra) == 0 && usuarioRegistro.rol == 1) {
+        if(strcmp(usuarioRegistro.nombre, (*pUsuarioIngresado)->nombre) == 0 
+                    && strcmp(usuarioRegistro.contra, (*pUsuarioIngresado)->contra) == 0 && usuarioRegistro.rol == 1) {
             
             flag = true;
-
+            **pUsuarioIngresado = usuarioRegistro;
             return 1;
 
-        }else if(strcmp(usuarioRegistro.nombre, pUsuarioIngresado.nombre) == 0 
-                    && strcmp(usuarioRegistro.contra, pUsuarioIngresado.contra) == 0 && usuarioRegistro.rol == 2) {
+        }else if(strcmp(usuarioRegistro.nombre, (*pUsuarioIngresado)->nombre) == 0 
+                    && strcmp(usuarioRegistro.contra, (*pUsuarioIngresado)->contra) == 0 && usuarioRegistro.rol == 2) {
             
             flag = true;
-
+            **pUsuarioIngresado = usuarioRegistro;
             return 2;
 
         }
@@ -134,14 +133,15 @@ int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_Usu
     fclose(*archivoUsuarios);
 }
 
-tr_UsuarioInfo ingresarUsuario() {
-    tr_UsuarioInfo usuario;
+tr_UsuarioInfo *ingresarUsuario() {
+    tr_UsuarioInfo *usuario;
+    usuario = malloc(sizeof(tr_UsuarioInfo));
     printf("\nIngrese su nombre de usuario:");
     fflush(stdin);
-    scanf("%[^\n]s", &usuario.nombre);
+    scanf("%[^\n]s", &usuario->nombre);
     printf("Ingrese su contrasena:");
     fflush(stdin);
-    scanf("%[^\n]s", &usuario.contra);
+    scanf("%[^\n]s", &usuario->contra);
     return usuario;
 }
 

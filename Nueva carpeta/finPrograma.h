@@ -5,25 +5,22 @@
 
 //Interfaz Publica
 
-void procesarGuardado(FILE**, FILE**, FILE**, FILE**, FILE**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, tr_UsuarioInfo);
+void procesarGuardado(FILE**, FILE**, FILE**, FILE**, FILE**, t_ListaProducto**, t_ListaProducto**, 
+                                t_ListaProducto**, t_ListaProducto**);
 void grabarLista(FILE**, t_ListaProducto*, const char *);
-void grabarUsuario(FILE**, tr_UsuarioInfo, const char *);
+void grabarUsuario(FILE**, tr_UsuarioInfo**, const char *);
 
 //interfaz privada
 
 void procesarGuardado(FILE **archivo1, FILE **archivo2, FILE **archivo3, FILE **archivo4, FILE **archivo5, 
                         t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t_ListaProducto **v_Lista3,
-                                t_ListaProducto **v_Lista4, tr_UsuarioInfo pUsuario) {
+                                t_ListaProducto **v_Lista4) {
 
     //Grabamos todas las listas de forma ordenada en el archivo
     grabarLista(archivo1, *v_Lista1, "stockAlimentos.dat");
     grabarLista(archivo2, *v_Lista2, "stockBebidas.dat");
     grabarLista(archivo3, *v_Lista3, "stockCuidadoPersonal.dat");
     grabarLista(archivo4, *v_Lista4, "stockLimpieza.dat");
-
-    //Grabamos el usuario
-    //grabarUsuario(archivo5, pUsuario, "archivoUsuarios");
-
 }
 
 void grabarLista(FILE **archivo, t_ListaProducto *v_Lista, const char *nombreArchivo) {
@@ -44,7 +41,7 @@ void grabarLista(FILE **archivo, t_ListaProducto *v_Lista, const char *nombreArc
     fclose(*archivo);
 }
 
-void grabarUsuario(FILE **archivoUsuarios, tr_UsuarioInfo pUsuario, const char *nombreArchivo) {
+void grabarUsuario(FILE **archivoUsuarios, tr_UsuarioInfo **pUsuario, const char *nombreArchivo) {
 
     tr_UsuarioInfo usuario;
 
@@ -52,7 +49,7 @@ void grabarUsuario(FILE **archivoUsuarios, tr_UsuarioInfo pUsuario, const char *
     if(*archivoUsuarios == NULL) {
         printf("No se pudo abrir el archivo para guardar!\n");
     }
-    usuario = pUsuario;
+    usuario = **pUsuario;
 
     fwrite(&usuario, sizeof(tr_UsuarioInfo), 1, *archivoUsuarios);
 
