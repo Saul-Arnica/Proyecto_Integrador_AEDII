@@ -142,7 +142,7 @@ void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {
 }
 
 void eliminarProductoPorNombre(t_ListaProducto **v_Lista, const char *nombreProducto) {
-    t_ListaProducto* productoAEliminar;
+    t_ListaProducto *productoAEliminar;
     productoAEliminar = buscarProductoNombre(v_Lista, nombreProducto);
     if (productoAEliminar != NULL) {
         elim_Producto(v_Lista, productoAEliminar->producto);
@@ -210,7 +210,7 @@ t_ListaProducto *buscarProductoNombre(t_ListaProducto **v_Lista, const char *nom
     t_ListaProducto *productoActual;
     productoActual = *v_Lista;
     while(productoActual != NULL) {
-        if(strstr(productoActual->producto.nombreProduct, nombreProducto) != NULL) {
+        if(strcmp(productoActual->producto.nombreProduct, nombreProducto) == 0) {
             return productoActual;
         }
         productoActual = productoActual->sig;
@@ -321,7 +321,6 @@ void modificarProductoCompleto(t_ListaProducto **v_Lista, int pCodProducto) {
     int i;
     tr_Productos nuevoProducto;
     // Pedir al usuario que introduzca los nuevos datos del producto
-
     printf("Introduce el nuevo nombre del producto: ");
     scanf("%s", nuevoProducto.nombreProduct);
     printf("Introduce el nuevo precio del producto: ");

@@ -17,7 +17,7 @@ typedef char tString[MAX_CHAR];
 typedef struct {
     int ID;
     tString nombre;
-    tString contraseña;
+    tString contra;
     int rol;
 }tr_UsuarioInfo;
 
@@ -97,19 +97,17 @@ void insFinal(t_ListaProducto** lista, tr_Productos pProducto) {
 void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
     if (*lista == NULL) {
         printf("La lista está vacía!...\n");
-        return;
     }
 
     t_ListaProducto *aux = *lista;
     t_ListaProducto *prev = NULL;
 
-    if (aux != NULL && aux->producto.codProducto == pProducto.codProducto) {
+    if(aux != NULL && aux->producto.codProducto == pProducto.codProducto) {
         *lista = aux->sig;
         if (*lista != NULL) {
             (*lista)->ant = NULL;
         }
         free(aux);
-        return;
     }
 
     while (aux != NULL && aux->producto.codProducto != pProducto.codProducto) {
@@ -119,7 +117,6 @@ void elim_Producto(t_ListaProducto **lista, tr_Productos pProducto) {
 
     if (aux == NULL) {
         printf("El elemento no está presente en la lista!...\n");
-        return;
     }
 
     prev->sig = aux->sig;

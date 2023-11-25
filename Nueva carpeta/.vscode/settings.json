@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "listasdoblementeenlazadas.h": "c",
+        "iniciodeprograma.h": "c",
+        "operacionesbasicas.h": "c",
+        "operacionesuser.h": "c",
+        "operacionesadmin.h": "c",
+        "finprograma.h": "c"
+    }
+}

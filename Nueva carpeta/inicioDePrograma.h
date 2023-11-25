@@ -54,7 +54,9 @@ void inicializarArchivo(FILE **archivo, const char *pNombreArchivo) {
 }
 
 void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
-    FILE *archivo = fopen(nombreArchivo, "rb");
+
+    FILE *archivo;
+    archivo = fopen(nombreArchivo, "r+b");
     if(archivo != NULL) {
         printf("Se pudo abrir el archivo.\n");
     }else{
@@ -92,9 +94,11 @@ void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
 
 int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_UsuarioInfo pUsuarioIngresado) {
 
+    bool flag = false;
+
     tr_UsuarioInfo usuarioRegistro;
 
-    *archivoUsuarios = fopen(nombreArchivo, "rb");
+    *archivoUsuarios = fopen(nombreArchivo, "r+b");
 
     if (*archivoUsuarios == NULL) {
         printf("Error al abrir el archivo!!\n");
@@ -105,22 +109,27 @@ int verificarUsuarios(FILE **archivoUsuarios, const char *nombreArchivo , tr_Usu
 
     while(!feof(*archivoUsuarios)) {
 
+
         if(strcmp(usuarioRegistro.nombre, pUsuarioIngresado.nombre) == 0 
-                    && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol == 1) {
+                    && strcmp(usuarioRegistro.contra, pUsuarioIngresado.contra) == 0 && usuarioRegistro.rol == 1) {
+            
+            flag = true;
 
             return 1;
 
         }else if(strcmp(usuarioRegistro.nombre, pUsuarioIngresado.nombre) == 0 
-                    && strcmp(usuarioRegistro.contraseña, pUsuarioIngresado.contraseña) == 0 && usuarioRegistro.rol == 2) {
+                    && strcmp(usuarioRegistro.contra, pUsuarioIngresado.contra) == 0 && usuarioRegistro.rol == 2) {
+            
+            flag = true;
 
             return 2;
 
-        }else{
-
-            return 0;
-
         }
+
         fread(&usuarioRegistro, sizeof(tr_UsuarioInfo), 1, *archivoUsuarios);
+    }
+    if(flag == false) {
+        return 0;
     }
     fclose(*archivoUsuarios);
 }
@@ -132,12 +141,12 @@ tr_UsuarioInfo ingresarUsuario() {
     scanf("%[^\n]s", &usuario.nombre);
     printf("Ingrese su contrasena:");
     fflush(stdin);
-    scanf("%[^\n]s", &usuario.contraseña);
+    scanf("%[^\n]s", &usuario.contra);
     return usuario;
 }
 
 bool archivoExiste(const char *nombreArchivo) {
-    FILE *archivo = fopen(nombreArchivo, "rb");
+    FILE *archivo = fopen(nombreArchivo, "r+b");
     if(archivo != NULL){
         fclose(archivo);
         return true;

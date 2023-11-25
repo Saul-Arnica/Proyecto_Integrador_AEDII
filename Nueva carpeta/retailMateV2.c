@@ -1,21 +1,17 @@
 #include"inicioDePrograma.h"
-#include"operacionesBasicas.h"
 #include"operacionesAdmin.h"
 #include"operacionesUser.h"
-#include"finDePrograma.h"
-
+#include"finPrograma.h"
 
 //Prototipado de funciones
+
 void inicializacionStock();
 void inicioPrograma();
 void menu1();
 void menu2();
 void terminacionDePrograma();
 
-
 //Variables globales
-
-int confirmacion;
 
 t_ListaProducto *alimentos, *bebidas, *cuidadoPersonal, *limpieza;
 
@@ -24,72 +20,79 @@ tr_UsuarioInfo usuario;
 FILE *stockAlimentos, *stockBebidas, *stockCuidadoPersonal, *stockLimpieza, *archivoUsuarios;
 
 //Funcion principal
+
 int main() {
     inicializacionStock();
-    //imprimirTitulo();
-    //inicioPrograma();
-    //imprimirGuardado();
-    menu1();
-    system("pause");
+    inicioPrograma();
 return 0;
 }
 
 //Implementacion de funciones
 
-void iniciarPrograma() {
-
-}
-
 void inicializacionStock() {
 
     inicializarListas(&alimentos, &bebidas, &cuidadoPersonal, &limpieza);
 
-    if(archivoExiste("stockAlimentos") && archivoExiste("stockBebidas") && archivoExiste("stockCuidadoPersonal") && archivoExiste("stockLimpieza")) {
+    if(archivoExiste("stockAlimentos.dat") && archivoExiste("stockBebidas.dat") 
+        && archivoExiste("stockCuidadoPersonal.dat") && archivoExiste("stockLimpieza.dat")) {
 
-        cargarDesdeArchivo(&alimentos, "stockAlimentos");
-        cargarDesdeArchivo(&bebidas, "stockBebidas");
-        cargarDesdeArchivo(&cuidadoPersonal, "stockCuidadoPersonal");
-        cargarDesdeArchivo(&limpieza, "stockLimpieza");
+        cargarDesdeArchivo(&alimentos, "stockAlimentos.dat");
+        cargarDesdeArchivo(&bebidas, "stockBebidas.dat");
+        cargarDesdeArchivo(&cuidadoPersonal, "stockCuidadoPersonal.dat");
+        cargarDesdeArchivo(&limpieza, "stockLimpieza.dat");
 
     }else{
 
-        inicializarArchivo(&stockAlimentos, "stockAlimentos");
-        inicializarArchivo(&stockBebidas, "stockBebidas");
-        inicializarArchivo(&stockCuidadoPersonal, "stockCuidadoPersonal");
-        inicializarArchivo(&stockLimpieza, "stockLimpieza");
+        inicializarArchivo(&stockAlimentos, "stockAlimentos.dat");
+        inicializarArchivo(&stockBebidas, "stockBebidas.dat");
+        inicializarArchivo(&stockCuidadoPersonal, "stockCuidadoPersonal.dat");
+        inicializarArchivo(&stockLimpieza, "stockLimpieza.dat");
 
     }
+    imprimirInicio();
 }
 
 void inicioPrograma() {
+    int estado;
 
-    if(archivoExiste("archivoUsuarios")) {
+    if(archivoExiste("archivoUsuarios.dat")) {
 
-            usuario = ingresarUsuario();
 
-            if(verificarUsuarios(&archivoUsuarios, "archivoUsuarios", usuario) == 1) {
+        usuario = ingresarUsuario();
+        estado = verificarUsuarios(&archivoUsuarios, "archivoUsuarios.dat", usuario);
+        switch(estado) {
+            case 1:{
                 printf("Bienvenido administrador %d - %s", usuario.ID, usuario.nombre);
                 sleep(2);
                 menu1();
-            }else if(verificarUsuarios(&archivoUsuarios, "archivoUsuarios", usuario) == 2) {
+                                                    break;
+            }
+            case 2:{
                 printf("Bienvenido empleado %d - %s", usuario.ID, usuario.nombre);
                 sleep(2);
                 menu2();
-            }else if(verificarUsuarios(&archivoUsuarios, "archivoUsuarios", usuario) == 0) {
+                                                    break;
+            }
+            case 0:{
                 printf("Usuario incorrecto, intente de nuevo...");
                 sleep(2);
                 inicioPrograma();
+                                                    break;
             }
-
-        }else{
-            inicializarArchivo(&archivoUsuarios, "archivoUsuarios");
-            printf("\t\t\tBienvenido al Software RetailMate\n");
-            printf("Ingrese un usuario Administrador\n\n");
-            usuario = registrarUsuario();
-            printf("Bienvenido administrador %d - %s", usuario.ID, usuario.nombre);
-            sleep(2);
-            menu1();
         }
+
+    }else{
+
+        inicializarArchivo(&archivoUsuarios, "archivoUsuarios.dat");
+        printf("\t\t\tBienvenido al Software RetailMate\n");
+        printf("Ingrese un usuario Administrador\n\n");
+        usuario = registrarUsuario();
+        grabarUsuario(&archivoUsuarios, usuario, "archivoUsuarios.dat");
+        printf("Bienvenido administrador %d - %s", usuario.ID, usuario.nombre);
+        sleep(2);
+        menu1();
+
+    }
 }
 
 void menu1() {
@@ -138,19 +141,25 @@ void menu1() {
 
         }
         case 6:{
-            printf("Opciones disponibles(1-Agregar usuario | 2-Elimiar usuario):");
+            printf("Opciones disponibles(1-Agregar usuario | 2-Elimiar usuario | 3-Visualizar usuarios registrados):");
             scanf("%d", &opc);
             switch(opc) {
                 case 1:{
                     usuario = registrarUsuario();
-                    //funcion de guardar
+                    grabarUsuario(&archivoUsuarios, usuario, "archivoUsuarios.dat");
                     printf("Usuario %d - %s guardado exitosamente\n", usuario.ID, usuario.nombre);
                                                     break;
                 }
                 case 2:{
+                    int confirmacion;
                     printf("Ingrese el ID del usuario a eliminar:");
-                    scanf("%d", usuario.ID);
-                    eliminarUsuario(usuario.ID);
+                    scanf("%d", &usuario.ID);
+                    eliminarUsuario(usuario);
+                                                    break;
+                }
+                case 3:{
+                    visualizarUsuarios(&archivoUsuarios, "archivoUsuarios.dat");
+                                                    break;
                 }
             }
             menu1();
@@ -158,8 +167,9 @@ void menu1() {
         }
         case 0:{
             printf("Gracias por usar nuestro software!\n");
-            printf("\tCualquier incoveniente enviar al correo: ""retailMate@outlook.com""");
-            sleep(5);
+            printf("\n\tCualquier incoveniente enviar al correo: ""retailMate@outlook.com""");
+            terminacionDePrograma();
+            imprimirGuardado();
             printf("\n");
                                                     break;
         }
@@ -231,4 +241,9 @@ void menu2() {
             menu2();
         } 
     }
+}
+
+void terminacionDePrograma() {
+    procesarGuardado(&stockAlimentos, &stockBebidas, &stockCuidadoPersonal, &stockLimpieza, &archivoUsuarios,
+                        &alimentos, &bebidas, &cuidadoPersonal, &limpieza, usuario);
 }
