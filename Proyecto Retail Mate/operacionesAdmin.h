@@ -2,7 +2,6 @@
 #define FIN_DE_PROGRAMA
 
 #include"inicioDePrograma.h"
-#define SEEK_SET 0
 
 //Interfaz Publica
 void visualizarUsuarios(FILE**, const char*);
@@ -26,54 +25,6 @@ void visualizarUsuarios(FILE **archivo, const char *nombreArchivo) {
 
     fclose(*archivo);
 }
-
-/*void eliminarUsuario(tr_UsuarioInfo pUsuario) {
-    FILE *archivoUsuarios;
-    FILE *archivoTemporal;
-
-    archivoTemporal = tmpfile();
-
-    tr_UsuarioInfo usuario;
-
-    archivoUsuarios = fopen("archivoUsuarios", "r+b");
-    if (archivoUsuarios == NULL) {
-        printf("El archivo no pudo ser encontrado o abierto!\n");
-
-    }
-    fread(&usuario, sizeof(tr_UsuarioInfo), 1, archivoUsuarios);
-    while (!feof(archivoUsuarios)) {
-        if(pUsuario.ID != usuario.ID) {
-            fwrite(&usuario, sizeof(tr_UsuarioInfo), 1, archivoTemporal);
-        }
-        fread(&usuario, sizeof(tr_UsuarioInfo), 1, archivoUsuarios);
-    }
-    //cerramos el archivo de usuarios original pero dejamos abierto el temporal
-    fclose(archivoUsuarios);
-    //Ahora reescribimos el original
-    archivoUsuarios = fopen("archivoUsuarios", "w+b");
-    if (archivoUsuarios == NULL) {
-        printf("El archivo no pudo ser encontrado o abierto!\n");
-    }
-
-    //Ya que el archivo temporal esta abierto en "wb+" nos permite leerlo y re-posicionar hacia el principio.
-    fseek(archivoTemporal, 0, SEEK_SET);
-
-    //Luego de posicionarnos al principio empezamos a leer.
-
-    fread(&usuario, sizeof(tr_UsuarioInfo), 1, archivoTemporal);
-
-    while(!feof(archivoTemporal)) {
-
-        fwrite(&usuario, sizeof(tr_UsuarioInfo), 1, archivoUsuarios);
-
-        fread(&usuario, sizeof(tr_UsuarioInfo), 1, archivoTemporal);
-    }
-    //cerramos los archivos
-    fclose(archivoTemporal);
-    fclose(archivoUsuarios);
-
-    printf("El usuario con ID %d fue eliminado exitosamente\n", pUsuario.ID);
-}*/
 
 void eliminarUsuario(tr_UsuarioInfo **pUsuario) {
     FILE *archivoUsuarios;

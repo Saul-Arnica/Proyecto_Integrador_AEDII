@@ -14,12 +14,17 @@ void pasarMayuscula(char*);
 
 //Interfaz Privada
 
+#include <stdio.h>
+#include <unistd.h>
+
+#define MAX 10
+
 void imprimirInicio() {
     int i;
     int num_punto = 0;
     int max_punto = 3; // Número máximo de puntos a mostrar
     fflush(stdout);
-    printf("\t\tBienvenidos a RetailMate lo mejor para tu comercio :D\n\n");
+    printf("\t\t\t\t\t\tBienvenidos a RetailMate lo mejor para tu comercio :D\n\n");
     printf("\n\nCargando");
 
     for (i = 0; i < MAX + 1; ++i) { // Modificar el número total de iteraciones
@@ -38,7 +43,10 @@ void imprimirInicio() {
             num_punto = 0; // Restablece la cuenta de puntos
         }
     }
+
+    printf("\nCargado exitoso.\n");
 }
+
 
 void imprimirGuardado() {
 
@@ -46,7 +54,7 @@ void imprimirGuardado() {
     int num_punto = 0;
     int max_punto = 3; // Número máximo de puntos a mostrar
 
-    printf("\nGuardando");
+    printf("\n\nGuardando");
 
     for (i = 0; i < MAX + 1; ++i) { // Modificar el número total de iteraciones
         usleep(500000); // Espera 0.5 segundos (500,000 microsegundos)
@@ -65,7 +73,7 @@ void imprimirGuardado() {
         }
     }
 
-    printf("\nGuardado completo.\n");
+    printf("\n\nGuardado completo.\n");
 }
 
 void pasarMayuscula(char *nombreProducto) {

@@ -62,6 +62,8 @@ void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
     }else{
         printf("No se pudo abrir el archivo.\n");
     }
+    printf("\033[H\033[J");
+
 
     t_ListaProducto *nuevoProducto;
     tr_Productos productoLeido;

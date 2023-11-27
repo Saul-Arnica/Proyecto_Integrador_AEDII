@@ -7,14 +7,14 @@
 
 //Funciones de ingreso.
 
-void ingresarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, tr_Productos*, int);
-void cargarProducto(t_ListaProducto**, tr_Productos*);
+void ingresarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, tr_Productos*, int); //Seleccionamos la categoria
+void cargarProducto(t_ListaProducto**, tr_Productos*); // cargamos el producto, y lo insertamos
 
 //Funciones de eliminar.
 
-void eliminarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**,tr_Productos*, int);
+void eliminarProductos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**,tr_Productos*, int); //Seleccionamos la categoria
 void elimProductos(t_ListaProducto**, tr_Productos*, int); //Funcion para elegir de que forma eliminar
-void eliminarProductoPorNombre(t_ListaProducto**, const char*);
+void eliminarProductoPorNombre(t_ListaProducto**, const char*); //Eliminamos un producto segun su nombre.
 
 //Funciones de Buscar.
 
@@ -28,10 +28,11 @@ void buscarProducto(t_ListaProducto**, const char*); //Buscamos los productos po
 
 //Funciones de Modificar.
 
-void modificar_Productos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto**, t_ListaProducto*, char*, int, int*); //Elejimos la categoria
+void modificar_Productos(t_ListaProducto**, t_ListaProducto**, t_ListaProducto**,
+                            t_ListaProducto**, t_ListaProducto*, char*, int, int*); //Elejimos la categoria
 void modificarProductos(t_ListaProducto**, t_ListaProducto*, int);//Elejimos que deseamos modificar
-void procesarCambio(t_ListaProducto**, t_ListaProducto*, int, int);
-void modificarProductoCompleto(t_ListaProducto**, int);
+void procesarCambio(t_ListaProducto**, t_ListaProducto*, int, int); //Segun que opc elijamos, realizamos la accion
+void modificarProductoCompleto(t_ListaProducto**, int); //Modificamos todo menos el Cod. Producto ya que es algo unico, propio del producto
 
 //Funciones para visualizar
 
