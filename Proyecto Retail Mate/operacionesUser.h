@@ -113,7 +113,7 @@ void eliminarProductos(t_ListaProducto **v_Lista1, t_ListaProducto **v_Lista2, t
                 break;
         }
     }
-
+    //Nombres descripitvos.
 }
 
 void elimProductos(t_ListaProducto **v_Lista, tr_Productos *producto, int opc) {

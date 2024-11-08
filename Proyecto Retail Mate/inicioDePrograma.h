@@ -58,7 +58,7 @@ void cargarDesdeArchivo(t_ListaProducto **v_Lista, const char *nombreArchivo) {
     FILE *archivo;
     archivo = fopen(nombreArchivo, "r+b");
     if(archivo != NULL) {
-        printf("Se pudo abrir el archivo.\n");
+        printf("Se pudo abrir el archivo.\n"); //no es optimo.
     }else{
         printf("No se pudo abrir el archivo.\n");
     }
